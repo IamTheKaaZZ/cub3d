@@ -1,3 +1,5 @@
+
+#define GL_SILENCE_DEPRECATION
 #include	<stdio.h>
 
 #import <Cocoa/Cocoa.h>

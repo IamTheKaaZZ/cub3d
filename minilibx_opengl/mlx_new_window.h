@@ -5,6 +5,7 @@
 //
 // include opengl needed before mlx_int.h
 //
+#define GL_SILENCE_DEPRECATION
 
 #import <Cocoa/Cocoa.h>
 #import "mlx_int.h"

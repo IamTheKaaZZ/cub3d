@@ -5,7 +5,7 @@
 //
 // include opengl needed before mlx_int.h
 //
-
+#define GL_SILENCE_DEPRECATION
 
 #define	MAX_EVENT	32
 #define MAX_PIXEL_NB	200000
