@@ -1,5 +1,5 @@
 //  mlx_new_window.m
-#define GL_SILENCE_DEPRECATION
+//#define GL_SILENCE_DEPRECATION
 
 #import <Cocoa/Cocoa.h>
 #import <OpenGL/gl3.h>

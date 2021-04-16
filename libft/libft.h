@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 10:37:13 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/15 13:03:25 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/04/16 15:08:22 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "get_next_line.h"
+# include "libft_bonus.h"
 
 /*
 **	Standard LibC functions*

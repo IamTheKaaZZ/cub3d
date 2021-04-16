@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/08 10:32:48 by bcosters          #+#    #+#              #
-#    Updated: 2021/04/15 13:06:37 by bcosters         ###   ########.fr        #
+#    Updated: 2021/04/16 14:05:12 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFLAGS 	= -Wall -Wextra -Werror
 
 #	Own sources/objects/headers
 
-SRCS_OWN = ${wildcard ft_*.c}
+SRCS_OWN = ${wildcard *.c}
 
 OBJS_OWN = ${SRCS_OWN:%.c=obj/%.o}
 

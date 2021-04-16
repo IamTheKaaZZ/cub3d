@@ -6,29 +6,24 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/15 11:35:49 by bcosters          #+#    #+#              #
-#    Updated: 2021/04/15 13:19:17 by bcosters         ###   ########.fr        #
+#    Updated: 2021/04/16 17:17:09 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #	~ CUB 3D ~	#
 
-NAME	= map.cub
+# -*- Definitions of variables -*-
+
+NAME	= my_awesome_game
 
 LIBXDR	= minilibx_mms/
 OPENGLDR	= minilibx_opengl/
 OBJDR	= obj/
-HEADDR	= include/
 LIBFTDR	= libft/
 
-# -*- Definitions of variables -*-
-
-#SRCS	= ${shell find src -type f -name "*.c"}
-#SRCLIB	= ${shell find libft/src -type f -name "ft_*.c"}
-
-#OBJS	= ${SRCS:src/%.c=obj/%.o}
-#OBJLIB	= ${SRCLIB:libft/src/%.c=libft/obj/%.o}
-
-#HEADER	= ${shell find include -type f -name "ft_*.h"}
+MINILIB = libmlx.dylib
+HEADER	= cub3d.h
+GAMESRC	= my_awesome_game.c
 
 CC		= gcc
 RM		= rm -f
@@ -38,22 +33,22 @@ CFLAGS	= -Wall -Wextra -Werror
 
 #	Implicit rules
 
-obj/%.o: src/%.c
-			@echo "Compiling printf object: $@"
-			@$(CC) -c $< -o $@
+%.o: %.c
+	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 #	Active rules
 
-all:		minilibx #$(NAME) #test
+all:		$(NAME) #test
 
 minilibx:
 			@$(MAKE) --silent -C $(LIBXDR)
+			@cp $(LIBXDR)$(MINILIB) .
 			@$(MAKE) --silent -C $(OPENGLDR)
 			@$(MAKE) --silent -C $(LIBFTDR)
 
-$(NAME):	$(LIBOBJDR) $(OBJDR) $(OBJLIB) $(OBJS) $(HEADER)
+$(NAME):	minilibx $(HEADER)
 			@echo "Compiling $(NAME)"
-			@ar rcs $(NAME) $(OBJS) $(OBJLIB)
+			@$(CC) $(CFLAGS) -g $(GAMESRC) -L$(LIBXDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
 			#--------------------------------#
 			@echo "Finished compiling $(NAME)"
 
@@ -65,9 +60,6 @@ $(OBJDR):
 $(LIBOBJDR):
 			@mkdir -p $(LIBOBJDR)
 
-$(LOGDIR):
-			mkdir -p $(LOGDIR)
-
 #	Cleaning rules
 
 clean:
@@ -77,7 +69,7 @@ clean:
 
 fclean:		clean
 			@echo "Removing $(NAME)"
-			@${RM} ${NAME}
+			@${RM} ${NAME} ${MINILIB}
 			@echo "Removing minilibx library"
 			@$(MAKE) -C ${LIBXDR} clean
 			@echo "Removing opengl library"
