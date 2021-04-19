@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/15 11:35:49 by bcosters          #+#    #+#              #
-#    Updated: 2021/04/16 17:17:09 by bcosters         ###   ########.fr        #
+#    Updated: 2021/04/19 15:30:26 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,14 @@ LIBXDR	= minilibx_mms/
 OPENGLDR	= minilibx_opengl/
 OBJDR	= obj/
 LIBFTDR	= libft/
+SRCDIR	= src/
 
 MINILIB = libmlx.dylib
 HEADER	= cub3d.h
+
 GAMESRC	= my_awesome_game.c
+SRCS	= ${shell find src -type f -name "*.c"}
+OBJS	= ${SRCS:src/%.c=obj/%.o}
 
 CC		= gcc
 RM		= rm -f
@@ -36,9 +40,13 @@ CFLAGS	= -Wall -Wextra -Werror
 %.o: %.c
 	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
+obj/%.o: src/%.c
+			@echo "Compiling cub3D source object: $@"
+			@$(CC) $(CFLAGS) -c $< -o $@
+
 #	Active rules
 
-all:		$(NAME) #test
+all:		$(NAME)
 
 minilibx:
 			@$(MAKE) --silent -C $(LIBXDR)
@@ -46,9 +54,9 @@ minilibx:
 			@$(MAKE) --silent -C $(OPENGLDR)
 			@$(MAKE) --silent -C $(LIBFTDR)
 
-$(NAME):	minilibx $(HEADER)
+$(NAME):	minilibx $(OBJDR) $(OBJS) $(HEADER)
 			@echo "Compiling $(NAME)"
-			@$(CC) $(CFLAGS) -g $(GAMESRC) -L$(LIBXDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
+			@$(CC) $(CFLAGS) -g $(GAMESRC) $(OBJS) -L$(LIBXDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
 			#--------------------------------#
 			@echo "Finished compiling $(NAME)"
 
