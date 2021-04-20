@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/08 10:32:48 by bcosters          #+#    #+#              #
-#    Updated: 2021/04/16 14:05:12 by bcosters         ###   ########.fr        #
+#    Updated: 2021/04/20 16:08:47 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ bonus:		fclean $(OBJDIR) $(OBJS_BONUS) $(HEADER)
 			@ar rcs $(NAME) $(OBJS_BONUS)
 			@echo FINISHED: Compiling MANDATORY AND BONUS LIBFT
 
-$(NAME):	fclean $(OBJDIR) ${OBJS_OWN} ${HEADER}
+$(NAME):	$(OBJDIR) ${OBJS_OWN} ${HEADER}
 			@echo "Compiling COMPLETE LIBFT (ALL + OWN FUNCTIONS)"
 			@ar rcs ${NAME} ${OBJS_OWN}
 			@echo "FINISHED: Compiling COMPLETE LIBFT (ALL + OWN FUNCTIONS)"

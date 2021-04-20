@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequal_bonus.c                                :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/22 08:50:54 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 10:36:01 by bcosters         ###   ########.fr       */
+/*   Created: 2021/02/09 11:30:06 by bcosters          #+#    #+#             */
+/*   Updated: 2021/04/20 10:26:52 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "libft.h"
 
-t_bool	ft_strequal(char *s1, char *s2)
+/*
+**Returns the amount of chars of a string before the NUL-term*
+*/
+
+size_t	ft_strlen(const char *str)
 {
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
+	size_t	i;
+
+	i = 0;
+	while (*str++)
+		i++;
+	return (i);
 }

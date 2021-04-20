@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequal_bonus.c                                :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/22 08:50:54 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 10:36:01 by bcosters         ###   ########.fr       */
+/*   Created: 2021/01/21 08:55:34 by bcosters          #+#    #+#             */
+/*   Updated: 2021/02/28 17:11:42 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+/*
+**	Copy at most len/n amount of bytes from src to dest
+**	if src < n bytes, the rest is filled with nulls in dest
+*/
 
-t_bool	ft_strequal(char *s1, char *s2)
+char	*ft_strncpy(char *dest, char *src, unsigned int n)
 {
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
+	unsigned int	i;
+
+	i = 0;
+	while (src[i] != '\0' && i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }

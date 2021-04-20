@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequal_bonus.c                                :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/22 08:50:54 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 10:36:01 by bcosters         ###   ########.fr       */
+/*   Created: 2021/02/09 10:55:25 by bcosters          #+#    #+#             */
+/*   Updated: 2021/04/20 10:24:35 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "libft.h"
 
-t_bool	ft_strequal(char *s1, char *s2)
+/*
+**scans initial n bytes of the memory area of s for the first instance of c.*
+**if it finds c, it returns a pointer to it
+*/
+
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
+	unsigned char	*t;
+	unsigned char	d;
+	size_t			i;
+
+	t = (unsigned char *)s;
+	d = (unsigned char)c;
+	i = 0;
+	while (i < n)
+	{
+		if (*(t + i) == d)
+			return (t + i);
+		i++;
+	}
 	return (0);
 }

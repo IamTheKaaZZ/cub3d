@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequal_bonus.c                                :+:      :+:    :+:   */
+/*   ft_strndup_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/22 08:50:54 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 10:36:01 by bcosters         ###   ########.fr       */
+/*   Created: 2021/03/23 17:18:26 by bcosters          #+#    #+#             */
+/*   Updated: 2021/04/20 10:27:19 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_bonus.h"
 
-t_bool	ft_strequal(char *s1, char *s2)
+char	*ft_strndup(const char *s, size_t n)
 {
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
+	size_t	size;
+	char	*dup;
+
+	if (n < ft_strlen(s))
+		size = n + 1;
+	else
+		size = ft_strlen(s) + 1;
+	dup = (char *)ft_calloc(size, sizeof(char));
+	if (!(dup))
+		return (NULL);
+	ft_memcpy(dup, s, size);
+	if (dup[n] != '\0')
+		dup[n] = '\0';
+	return (dup);
 }

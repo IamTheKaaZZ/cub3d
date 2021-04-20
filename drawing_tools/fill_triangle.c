@@ -1,43 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_rect_triangle.c                               :+:      :+:    :+:   */
+/*   fill_triangle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 16:00:25 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/19 16:00:53 by bcosters         ###   ########.fr       */
+/*   Created: 2021/04/19 16:01:30 by bcosters          #+#    #+#             */
+/*   Updated: 2021/04/20 15:01:51 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
 /*
-**	Fill a rectangular triangle with a given height, width and colour
+**	Fill any triangle with 3 given points and colour
 */
 
-void	fill_rect_triangle(t_image *img, int width, int height, int colour)
+void	fill_triangle(t_image *img, t_point *points, int colour)
 {
 	t_point	px;
-	t_point	p1;
-	t_point	p2;
-	t_point	p3;
+	int		maxx;
+	int		maxy;
 
-	p1.x = width;
-	p1.y = 0;
-	p2.x = 0;
-	p2.y = height;
-	p3.x = p1.x;
-	p3.y = p2.y;
-	img->line_length /= 4;
+	maxx = ft_max(points[0].x, points[1].x, points[2].x);
+	maxy = ft_max(points[0].y, points[1].y, points[2].y);
+	img->line_len /= 4;
 	px.y = 0;
-	while (px.y <= height)
+	while (px.y <= maxy)
 	{
 		px.x = 0;
-		while (px.x <= width)
+		while (px.x <= maxx)
 		{
-			if (ft_is_in_rect_triangle(px, p1, p2, p3))
-				img->address[(px.y * img->line_length) + px.x] = colour;
+			if (ft_is_in_triangle(px, points[0], points[1], points[2]))
+				img->addr[(px.y * img->line_len) + px.x] = colour;
 			px.x++;
 		}
 		px.y++;

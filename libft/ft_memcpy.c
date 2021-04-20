@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequal_bonus.c                                :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/22 08:50:54 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 10:36:01 by bcosters         ###   ########.fr       */
+/*   Created: 2021/02/08 13:01:41 by bcosters          #+#    #+#             */
+/*   Updated: 2021/04/20 10:24:46 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "libft.h"
 
-t_bool	ft_strequal(char *s1, char *s2)
+/*
+**copies n bytes from memory area src to memory area dest.*
+**The memory areas must not overlap.*
+**IF there is overlap -> memmove*
+*/
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	if (!s1 || !s2)
+	unsigned char	*tdest;
+	unsigned char	*tsrc;
+
+	if (!dest && !src)
 		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
+	tdest = (unsigned char *)dest;
+	tsrc = (unsigned char *)src;
+	while (n--)
+	{
+		*tdest++ = *tsrc++;
+	}
+	return (dest);
 }

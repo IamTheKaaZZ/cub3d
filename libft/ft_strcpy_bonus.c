@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequal_bonus.c                                :+:      :+:    :+:   */
+/*   ft_strcpy_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/22 08:50:54 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 10:36:01 by bcosters         ###   ########.fr       */
+/*   Created: 2021/01/19 09:06:57 by bcosters          #+#    #+#             */
+/*   Updated: 2021/04/20 10:25:45 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "libft.h"
 
-t_bool	ft_strequal(char *s1, char *s2)
+/*
+**	Copies src to dest incl null term
+*/
+
+char	*ft_strcpy(char *dest, char *src)
 {
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
+	int		len;
+	int		i;
+
+	len = ft_strlen(src);
+	i = 0;
+	while (i < len + 1)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	return (dest);
 }

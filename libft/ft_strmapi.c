@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequal_bonus.c                                :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/22 08:50:54 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 10:36:01 by bcosters         ###   ########.fr       */
+/*   Created: 2021/02/21 14:58:23 by bcosters          #+#    #+#             */
+/*   Updated: 2021/04/20 10:27:02 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "libft.h"
 
-t_bool	ft_strequal(char *s1, char *s2)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
+	unsigned int	i;
+	char			*res;
+
+	i = 0;
+	if (!s || !f)
+		return (NULL);
+	res = ft_calloc((ft_strlen(s) + 1), sizeof(char));
+	if (!(res))
+		return (NULL);
+	ft_strlcpy(res, s, ft_strlen(s) + 1);
+	while (res[i])
+	{
+		res[i] = (*f)(i, res[i]);
+		i++;
+	}
+	return (res);
 }

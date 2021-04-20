@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/19 17:16:19 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/04/20 17:01:34 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@
 # include <unistd.h>
 # include <math.h>
 # include "libft/libft.h"
-# ifdef __APPLE__
-#  include <OpenGL/gl.h>
-#  include <OpenGL/glu.h>
-#  include <GLUT/glut.h>
-# else
-#  ifdef _WIN32
-#   include <windows.h>
-#  endif
-#  include <GL/gl.h>
-#  include <GL/glu.h>
-#  include <GL/glut.h>
-# endif
-# include "minilibx_mms/mlx.h"
 # include "minilibx_opengl/mlx.h"
 
 /*
@@ -41,6 +28,15 @@
 
 # define MAXRES_X 5120
 # define MAXRES_Y 2880
+# define ESCAPE_KEY 53
+# define LEFT_ARR_KEY 123
+# define RIGHT_ARR_KEY 124
+# define UP_ARR_KEY 126
+# define DOWN_ARR_KEY 125
+# define W_KEY 13
+# define A_KEY 0
+# define S_KEY 1
+# define D_KEY 2
 enum	e_error_msg
 {
 	NO_CUB_FILE_TYPE,
@@ -57,11 +53,18 @@ enum	e_error_msg
 typedef struct s_image
 {
 	void	*ptr;
-	int		*address;
-	int		bitsperpixel;
-	int		line_length;
-	int		endian;
+	int		*addr;
+	int		bpp;
+	int		line_len;
+	int		end;
 }			t_image;
+
+typedef struct s_bg
+{
+	t_image	bg1;
+	t_image	bg2;
+	int		colour;
+}			t_bg;
 
 typedef struct s_point
 {
@@ -73,9 +76,21 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	double	win_height;
-	double	win_width;
+	double	win_h;
+	double	win_w;
 }			t_mlx;
+
+/*
+**	MASTER STRUCT
+*/
+
+typedef struct s_data
+{
+	t_mlx	m;
+	t_image	i;
+	t_point	p;
+	t_bg	bg;
+}			t_data;
 
 /*
 **	PROTOTYPES
