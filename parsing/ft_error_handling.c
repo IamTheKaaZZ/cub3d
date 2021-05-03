@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:35:55 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 11:58:21 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:09:51 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,13 @@ void	ft_error_handling(int errnum)
 		ft_putstr_fd("USAGE: map file in *.cub format", 2);
 		ft_putendl_fd(" OR *.cub + --save to save the image.\n", 2);
 	}
+	else if (errnum == OPEN_ERR)
+		ft_putendl_fd("Unable to open map file.\n", 2);
+	else if (errnum == READ_ERR)
+		ft_putendl_fd("Unable to read the map file correctly.\n", 2);
+	else if (errnum == RES_ERR)
+		ft_putendl_fd("Unable to read the resolution correctly.\n", 2);
+	else if (errnum == RES_OVERFLOW)
+		ft_putendl_fd("Given resolution is bigger than the screen regions.\n", 2);
 	exit(EXIT_FAILURE);
 }

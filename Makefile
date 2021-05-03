@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/15 11:35:49 by bcosters          #+#    #+#              #
-#    Updated: 2021/04/20 17:26:19 by bcosters         ###   ########.fr        #
+#    Updated: 2021/05/03 14:19:08 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,14 @@ LIBFTDR	= libft/
 DRAWDIR	= drawing_tools/
 
 MINILIB = libmlx.dylib
+CUBLIB	= libcub3d.a
 HEADER	= cub3d.h
 
 GAMESRC	= my_awesome_game.c
 SRCS	= ${shell find drawing_tools -type f -name "*.c"}
+SRCS	+= ${shell find parsing -type f -name "*.c"}
 OBJS	= ${SRCS:drawing_tools/%.c=obj/%.o}
+OBJS	+= ${SRCS:parsing/%.c=obj/%.o}
 
 CC		= gcc
 RM		= rm -f
@@ -40,7 +43,11 @@ CFLAGS	= -Wall -Wextra -Werror
 	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 obj/%.o: drawing_tools/%.c
-			@echo "Compiling cub3D source object: $@"
+			@echo "Compiling drawing_tools source object: $@"
+			@$(CC) $(CFLAGS) -c $< -o $@
+
+obj/%.o: parsing/%.c
+			@echo "Compiling parsing source object: $@"
 			@$(CC) $(CFLAGS) -c $< -o $@
 
 #	Active rules
@@ -52,8 +59,9 @@ libx:
 			@$(MAKE) --silent -C $(LIBFTDR)
 
 $(NAME):	libx $(OBJDR) $(OBJS) $(HEADER)
+			@ar rcs $(CUBLIB) $(OBJS)
 			@echo "Compiling $(NAME)"
-			@$(CC) $(CFLAGS) -g $(GAMESRC) $(OBJS) -L$(MINILIBDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
+			@$(CC) $(CFLAGS) -g $(GAMESRC) $(CUBLIB) -L$(MINILIBDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
 			#--------------------------------#
 			@echo "Finished compiling $(NAME)"
 
@@ -73,8 +81,8 @@ clean:
 			@rm -rf ${LIBOBJDR}
 
 fclean:		clean
-			@echo "Removing $(NAME)"
-			@${RM} ${NAME} ${MINILIB}
+			@echo "Removing $(NAME) and $(CUBLIB)"
+			@${RM} ${NAME} ${MINILIB} ${CUBLIB}
 			@echo "Removing opengl library"
 			@$(MAKE) -C ${MINILIBDR} clean
 			@echo "Removing libft library"

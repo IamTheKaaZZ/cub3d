@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:59:35 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/16 15:08:02 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/03 16:47:14 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_bool	ft_iscntrl(int c);
 t_bool	ft_isgraph(int c);
 t_bool	ft_isinf(double num);
 t_bool	ft_ispunct(int c);
+int		ft_isspace(int c);
 
 /*
 **	REDO THESE

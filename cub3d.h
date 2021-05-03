@@ -6,12 +6,12 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 17:01:34 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:09:03 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3_H
-# define CUB3_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -43,7 +43,11 @@ enum	e_error_msg
 	INVALID_FILE,
 	NOT_ENOUGH_ARGS,
 	TOO_MANY_ARGS,
-	INVALID_FLAG
+	INVALID_FLAG,
+	OPEN_ERR,
+	READ_ERR,
+	RES_ERR,
+	RES_OVERFLOW
 };
 
 /*
@@ -59,6 +63,14 @@ typedef struct s_image
 	int		end;
 }			t_image;
 
+typedef struct s_col
+{
+	int	t;
+	int	r;
+	int	g;
+	int	b;
+}		t_col;
+
 typedef struct s_bg
 {
 	t_image	bg1;
@@ -71,6 +83,18 @@ typedef struct s_point
 	int		x;
 	int		y;
 }			t_point;
+
+typedef struct s_map
+{
+	t_point	res;
+	char	*n_text;
+	char	*s_text;
+	char	*w_text;
+	char	*e_text;
+	char	*sprite;
+	t_col	floor;
+	t_col	ceil;
+}			t_map;
 
 typedef struct s_mlx
 {
@@ -90,6 +114,7 @@ typedef struct s_data
 	t_image	i;
 	t_point	p;
 	t_bg	bg;
+	t_map	mp;
 }			t_data;
 
 /*
@@ -104,10 +129,11 @@ void	fill_rect_triangle(t_image *img, int width, int height, int colour);
 void	fill_triangle(t_image *img, t_point *points, int colour);
 t_bool	ft_is_in_rect_triangle(t_point px, t_point p1, t_point p2, t_point p3);
 t_bool	ft_is_in_triangle(t_point px, t_point p1, t_point p2, t_point p3);
-int	ft_max(int a, int b, int c);
-int	ft_min(int a, int b, int c);
-int	create_inverse_trgb(int colour);
-int	create_trgb(int t, int r, int g, int b);
+int		ft_max(int a, int b, int c);
+int		ft_min(int a, int b, int c);
+int		create_inverse_trgb(int colour);
+int		create_trgb(int t, int r, int g, int b);
 void	ft_error_handling(int errnum);
+void	parse_map(t_data *d, char *filename);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:26:44 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 17:25:22 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/03 13:50:28 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	cub3d(char *cubfilename)
 {
 	t_data	d;
 
+	parse_map(&d, cubfilename);
 	d.p.x = 0;
 	d.p.y = 0;
 	d.i.ptr = NULL;
