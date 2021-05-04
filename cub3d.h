@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/03 17:09:03 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/04 16:21:29 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ enum	e_error_msg
 	OPEN_ERR,
 	READ_ERR,
 	RES_ERR,
-	RES_OVERFLOW
+	RES_OVERFLOW,
+	INVALID_PATH_CHR,
+	RGB_ERR,
+	DATA_ERR,
+	MAP_ERR
 };
 
 /*
@@ -62,14 +66,6 @@ typedef struct s_image
 	int		line_len;
 	int		end;
 }			t_image;
-
-typedef struct s_col
-{
-	int	t;
-	int	r;
-	int	g;
-	int	b;
-}		t_col;
 
 typedef struct s_bg
 {
@@ -86,14 +82,15 @@ typedef struct s_point
 
 typedef struct s_map
 {
+	char	*line;
 	t_point	res;
 	char	*n_text;
 	char	*s_text;
 	char	*w_text;
 	char	*e_text;
 	char	*sprite;
-	t_col	floor;
-	t_col	ceil;
+	int		floor_col;
+	int		ceil_col;
 }			t_map;
 
 typedef struct s_mlx
@@ -115,6 +112,8 @@ typedef struct s_data
 	t_point	p;
 	t_bg	bg;
 	t_map	mp;
+	t_list	*lst;
+	t_list	*current;
 }			t_data;
 
 /*
@@ -134,6 +133,9 @@ int		ft_min(int a, int b, int c);
 int		create_inverse_trgb(int colour);
 int		create_trgb(int t, int r, int g, int b);
 void	ft_error_handling(int errnum);
-void	parse_map(t_data *d, char *filename);
+void	parse_file(t_data *d, char *filename);
+void	free_split(char **split);
+void	flush_data(t_data *d, int errnum);
+int		process_map(t_data *d, int fd, int retval);
 
 #endif

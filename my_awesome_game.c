@@ -6,11 +6,12 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:26:44 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/03 13:50:28 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/04 16:49:33 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+//#include "simple_debug/simple_debugs.h"
 
 int	*image_data(t_image *i)
 {
@@ -42,7 +43,9 @@ void	init_circle(t_data *d)
 int	close_window(t_data *d)
 {
 	mlx_destroy_window(d->m.mlx, d->m.win);
+	flush_data(d, -1);
 	printf("Destroying the window and exiting game.\n");
+	//check_leaks();
 	exit(EXIT_SUCCESS);
 }
 
@@ -91,18 +94,37 @@ int	render_next_frame(t_data *d)
 	return (EXIT_SUCCESS);
 }
 
+void	data_init(t_data *d)
+{
+	d->m.mlx = NULL;
+	d->m.win = NULL;
+	d->m.win_w = 0;
+	d->m.win_h = 0;
+	d->mp.line = NULL;
+	d->mp.res.x = 0;
+	d->mp.res.y = 0;
+	d->mp.n_text = NULL;
+	d->mp.s_text = NULL;
+	d->mp.w_text = NULL;
+	d->mp.e_text = NULL;
+	d->mp.sprite = NULL;
+	d->mp.floor_col= -1;
+	d->mp.ceil_col= -1;
+	d->lst = ft_lstnew(NULL);
+}
 
 void	cub3d(char *cubfilename)
 {
 	t_data	d;
 
-	parse_map(&d, cubfilename);
+	data_init(&d);
+	parse_file(&d, cubfilename);
 	d.p.x = 0;
 	d.p.y = 0;
 	d.i.ptr = NULL;
 
-	d.m.win_h = 1080;
-	d.m.win_w = 1920;
+	d.m.win_h = d.mp.res.y;
+	d.m.win_w = d.mp.res.x;
 	d.m.mlx = mlx_init();
 	d.m.win = mlx_new_window(d.m.mlx, d.m.win_w, d.m.win_h, cubfilename);
 
@@ -112,28 +134,6 @@ void	cub3d(char *cubfilename)
 	mlx_loop_hook(d.m.mlx, render_next_frame, &d);
 	mlx_loop(d.m.mlx);
 }
-
-/*
-**	void	*mlx;
-**	void	*win_mlx;
-**	t_image	bg1;
-**	t_image	bg2;
-**	int		colour;
-**	mlx = mlx_init();
-**	win_mlx = mlx_new_window(mlx, 1920, 1080, "Awesome game dude");
-**	bg1.ptr = mlx_new_image(mlx, 960, 1080);
-**	bg1.address = (int *)mlx_get_data_addr(bg1.ptr, &bg1.bitsperpixel, &bg1.line_length, &bg1.endian);
-**	colour = create_trgb(0, 20, 200, 200);
-**	fill_rect(&bg1, 960, 1080, colour);
-**	bg2.ptr = mlx_new_image(mlx, 960, 1080);
-**	bg2.address = (int *)mlx_get_data_addr(bg2.ptr, &bg2.bitsperpixel, &bg2.line_length, &bg2.endian);
-**	colour = create_inverse_trgb(colour);
-**	fill_rect(&bg2, 960, 1080, colour);
-**	mlx_put_image_to_window(mlx, win_mlx, bg1.ptr, 0, 0);
-**	mlx_put_image_to_window(mlx, win_mlx, bg2.ptr, 960, 0);
-**	mlx_loop(mlx);
-**	exit(EXIT_SUCCESS);
-*/
 
 int	main(int argc, char **argv)
 {
@@ -154,5 +154,6 @@ int	main(int argc, char **argv)
 		ft_str_rev(errortest);
 		cub3d(argv[1]);
 	}
+	//check_leaks();
 	exit(EXIT_SUCCESS);
 }
