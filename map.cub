@@ -1,6 +1,6 @@
-R 1920 1080
+R 1920 10800
 
-NO ./textures/greystone.xpm
+NO	 ./textures/greystone.xpm
 SO ./textures/purplestone.xpm
 WE ./textures/redbrick.xpm
 EA ./textures/wood.xpm
@@ -8,6 +8,7 @@ EA ./textures/wood.xpm
 S ./textures/creeper.xpm
 F 77,92,53
 C 163,208,230
+
 
 		1111111111111111111111111
 		1000000000110000000000001

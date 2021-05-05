@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:26:44 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/04 16:49:33 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/05 15:20:49 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ void	data_init(t_data *d)
 	d->mp.floor_col= -1;
 	d->mp.ceil_col= -1;
 	d->lst = ft_lstnew(NULL);
+	d->mt.maxlen = 0;
+	d->mt.height = 0;
+	d->mt.matrix = NULL;
 }
 
 void	cub3d(char *cubfilename)

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/04 16:21:29 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/05 17:40:06 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 **	DEFINES
 */
 
-# define MAXRES_X 5120
-# define MAXRES_Y 2880
+# define MAXRES_X 2560
+# define MAXRES_Y 1440
 # define ESCAPE_KEY 53
 # define LEFT_ARR_KEY 123
 # define RIGHT_ARR_KEY 124
@@ -47,9 +47,9 @@ enum	e_error_msg
 	OPEN_ERR,
 	READ_ERR,
 	RES_ERR,
-	RES_OVERFLOW,
 	INVALID_PATH_CHR,
 	RGB_ERR,
+	OVERWRITE_ERR,
 	DATA_ERR,
 	MAP_ERR
 };
@@ -93,6 +93,13 @@ typedef struct s_map
 	int		ceil_col;
 }			t_map;
 
+typedef struct s_matrix
+{
+	size_t	maxlen;
+	size_t	height;
+	char	**matrix;
+}			t_matrix;
+
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -107,14 +114,14 @@ typedef struct s_mlx
 
 typedef struct s_data
 {
-	t_mlx	m;
-	t_image	i;
-	t_point	p;
-	t_bg	bg;
-	t_map	mp;
-	t_list	*lst;
-	t_list	*current;
-}			t_data;
+	t_mlx		m;
+	t_image		i;
+	t_point		p;
+	t_bg		bg;
+	t_map		mp;
+	t_list		*lst;
+	t_matrix	mt;
+}				t_data;
 
 /*
 **	PROTOTYPES
@@ -134,8 +141,11 @@ int		create_inverse_trgb(int colour);
 int		create_trgb(int t, int r, int g, int b);
 void	ft_error_handling(int errnum);
 void	parse_file(t_data *d, char *filename);
-void	free_split(char **split);
+void	free_split(char ***split);
 void	flush_data(t_data *d, int errnum);
+void	process_reso(t_data *d);
+void	process_texture(t_data *d, char *text_name);
+void	process_floor_ceil(t_data *d, char *name);
 int		process_map(t_data *d, int fd, int retval);
 
 #endif

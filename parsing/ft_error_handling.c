@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:35:55 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/04 15:15:20 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/05 11:57:31 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	ft_error_handling(int errnum)
 		ft_putendl_fd("Unable to open map file.\n", 2);
 	else if (errnum == READ_ERR)
 		ft_putendl_fd("Unable to read the map file correctly.\n", 2);
+	else if (errnum == OVERWRITE_ERR)
+		ft_putendl_fd("Multiple definitions for the same elements.\n", 2);
 	else if (errnum == RES_ERR)
 		ft_putendl_fd("Unable to read the resolution correctly.\n", 2);
-	else if (errnum == RES_OVERFLOW)
-		ft_putendl_fd("Given resolution is bigger than the screen regions.\n", 2);
 	else if (errnum == INVALID_PATH_CHR)
 		ft_putendl_fd("Invalid characters in texture path.\n", 2);
 	else if (errnum == RGB_ERR)
