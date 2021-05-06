@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:59:47 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/05 17:43:09 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/06 10:21:49 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_reso(t_data *d)
 	resolution = ft_split(d->mp.line + 2, ' ');
 	if (resolution[2] != NULL)
 	{
-		free_split(&resolution);
+		free_matrix(&resolution);
 		flush_data(d, RES_ERR);
 	}
 	d->mp.res.x = ft_atoi(resolution[0]);
@@ -39,7 +39,7 @@ void	process_reso(t_data *d)
 		d->mp.res.x = MAXRES_X;
 		d->mp.res.y = MAXRES_Y;
 	}
-	free_split(&resolution);
+	free_matrix(&resolution);
 }
 
 void	process_texture(t_data *d, char *text_name)
@@ -92,7 +92,7 @@ void	process_floor_ceil(t_data *d, char *name)
 	if (rgb[3] != NULL || ft_atoi(rgb[0]) > 255 || ft_atoi(rgb[1]) > 255
 		|| ft_atoi(rgb[2]) > 255)
 	{
-		free_split(&rgb);
+		free_matrix(&rgb);
 		flush_data(d, RGB_ERR);
 	}
 	col = create_trgb(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
@@ -101,5 +101,5 @@ void	process_floor_ceil(t_data *d, char *name)
 	else if (ft_strequal(name, "CEIL"))
 		d->mp.ceil_col = col;
 	printf("RGB = %d, %d, %d\n", ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
-	free_split(&rgb);
+	free_matrix(&rgb);
 }

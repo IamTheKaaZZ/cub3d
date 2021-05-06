@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/05 17:40:06 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/06 16:06:50 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ typedef struct s_matrix
 	char	**matrix;
 }			t_matrix;
 
+typedef struct s_player
+{
+	t_point	pos;
+	char	dir;
+}			t_player;
+
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -121,6 +127,7 @@ typedef struct s_data
 	t_map		mp;
 	t_list		*lst;
 	t_matrix	mt;
+	t_player	pl;
 }				t_data;
 
 /*
@@ -141,11 +148,12 @@ int		create_inverse_trgb(int colour);
 int		create_trgb(int t, int r, int g, int b);
 void	ft_error_handling(int errnum);
 void	parse_file(t_data *d, char *filename);
-void	free_split(char ***split);
+void	free_matrix(char ***split);
 void	flush_data(t_data *d, int errnum);
 void	process_reso(t_data *d);
 void	process_texture(t_data *d, char *text_name);
 void	process_floor_ceil(t_data *d, char *name);
 int		process_map(t_data *d, int fd, int retval);
+int		create_matrix(t_data *d);
 
 #endif
