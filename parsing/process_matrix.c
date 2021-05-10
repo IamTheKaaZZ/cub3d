@@ -6,11 +6,31 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 10:49:24 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/06 16:35:48 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/10 16:32:55 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+static int valid_data(t_data *d)
+{
+	d->txt.n.img = mlx_xpm_file_to_image(d->m.mlx, d->mp.n_text,
+		&d->txt.n.img_w, &d->txt.n.img_h);
+	d->txt.s.img = mlx_xpm_file_to_image(d->m.mlx, d->mp.s_text,
+		&d->txt.s.img_w, &d->txt.s.img_h);
+	d->txt.w.img = mlx_xpm_file_to_image(d->m.mlx, d->mp.w_text,
+		&d->txt.w.img_w, &d->txt.w.img_h);
+	d->txt.e.img = mlx_xpm_file_to_image(d->m.mlx, d->mp.e_text,
+		&d->txt.e.img_w, &d->txt.e.img_h);
+	d->txt.spr.img = mlx_xpm_file_to_image(d->m.mlx, d->mp.sprite,
+		&d->txt.spr.img_w, &d->txt.spr.img_h);
+	printf("%c\n", d->pl.dir);
+	if (d->pl.dir == 0 || !d->txt.n.img || !d->txt.s.img
+		|| !d->txt.e.img || !d->txt.spr.img)
+		return (0);
+	flush_data(d, -1, 0);
+	return (1);
+}
 
 static int	valid_and_player(t_data *d, size_t x, size_t y)
 {
@@ -38,28 +58,25 @@ static int	valid_and_player(t_data *d, size_t x, size_t y)
 
 static int	check_map(t_data *d)
 {
-	size_t	x;
-	size_t	y;
-
-	y = 0;
-	while (y < d->mt.height)
+	d->mt.y = 0;
+	while (d->mt.y < d->mt.height)
 	{
-		x = 0;
-		while (x < d->mt.maxlen)
+		d->mt.x = 0;
+		while (d->mt.x < d->mt.maxlen)
 		{
-			if (y == 0 || y == d->mt.height - 1
-				|| x == 0 || x == d->mt.maxlen - 1)
+			if (d->mt.y == 0 || d->mt.y == d->mt.height - 1
+				|| d->mt.x == 0 || d->mt.x == d->mt.maxlen - 1)
 			{
-				printf("Got into edge check, x = %zu y = %zu\n",x , y);
-				if (!ft_ischrinset(" 1", d->mt.matrix[y][x]))
+				printf("Got into edge check, x = %zu y = %zu\n",d->mt.x , d->mt.y);
+				if (!ft_ischrinset(" 1", d->mt.matrix[d->mt.y][d->mt.x]))
 					return (0);
 			}
 			else
-				if (!valid_and_player(d, x, y))
+				if (!valid_and_player(d, d->mt.x, d->mt.y))
 					return (0);
-			x++;
+			d->mt.x++;
 		}
-		y++;
+		d->mt.y++;
 	}
 	return (1);
 }
@@ -102,7 +119,7 @@ int	create_matrix(t_data *d)
 		current = current->next;
 	}
 	ft_lstmemdel_clear(&d->lst, ft_memdel);
-	if (!check_map(d))
+	if (!check_map(d) || !valid_data(d))
 		return (0);
 	return (1);
 }

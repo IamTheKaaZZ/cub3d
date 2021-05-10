@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:51:56 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 15:00:58 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:47:03 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,26 @@ void	fill_rect(t_image *img, int width, int height, int colour)
 		while (w < width)
 		{
 			img->addr[(h * img->line_len) + w] = colour;
+			w++;
+		}
+		h++;
+	}
+}
+
+void	fill_map_rect(t_data *d, t_bg *bg, int width, int height)
+{
+	size_t	h;
+	size_t	w;
+
+	bg->map2d.line_len /= 4;
+	h = d->mt.y_off;
+	while (h < height * d->mt.y)
+	{
+		w = d->mt.x_off;
+		while (w < width * d->mt.y)
+		{
+			//if (d->mt.matrix[d->mt.y][d->mt.x] == 1)
+				bg->map2d.addr[((h) * bg->map2d.line_len) + (w)] = bg->col1;
 			w++;
 		}
 		h++;

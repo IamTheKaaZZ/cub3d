@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/06 16:06:50 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:42:25 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ enum	e_error_msg
 **	STRUCTS
 */
 
+typedef struct s_keys
+{
+	t_bool	w;
+	t_bool	a;
+	t_bool	s;
+	t_bool	d;
+	t_bool	l_arr;
+	t_bool	r_arr;
+	t_bool	u_arr;
+	t_bool	d_arr;
+}			t_keys;
+
 typedef struct s_image
 {
 	void	*ptr;
@@ -69,21 +81,21 @@ typedef struct s_image
 
 typedef struct s_bg
 {
-	t_image	bg1;
-	t_image	bg2;
-	int		colour;
+	t_image	map2d;
+	t_image	map3d;
+	int		col1;
+	int		col2;
 }			t_bg;
 
 typedef struct s_point
 {
-	int		x;
-	int		y;
+	float	x;
+	float	y;
 }			t_point;
 
 typedef struct s_map
 {
 	char	*line;
-	t_point	res;
 	char	*n_text;
 	char	*s_text;
 	char	*w_text;
@@ -95,6 +107,10 @@ typedef struct s_map
 
 typedef struct s_matrix
 {
+	size_t	x;
+	size_t	y;
+	size_t	x_off;
+	size_t	y_off;
 	size_t	maxlen;
 	size_t	height;
 	char	**matrix;
@@ -104,14 +120,31 @@ typedef struct s_player
 {
 	t_point	pos;
 	char	dir;
+	t_image	img;
 }			t_player;
+
+typedef struct s_xpm
+{
+	void	*img;
+	int		img_w;
+	int		img_h;
+}			t_xpm;
+
+typedef struct s_texture
+{
+	t_xpm	n;
+	t_xpm	s;
+	t_xpm	w;
+	t_xpm	e;
+	t_xpm	spr;
+}			t_texture;
 
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	double	win_h;
-	double	win_w;
+	int		win_h;
+	int		win_w;
 }			t_mlx;
 
 /*
@@ -121,13 +154,13 @@ typedef struct s_mlx
 typedef struct s_data
 {
 	t_mlx		m;
-	t_image		i;
-	t_point		p;
+	t_keys		key;
 	t_bg		bg;
 	t_map		mp;
 	t_list		*lst;
 	t_matrix	mt;
 	t_player	pl;
+	t_texture	txt;
 }				t_data;
 
 /*
@@ -149,11 +182,13 @@ int		create_trgb(int t, int r, int g, int b);
 void	ft_error_handling(int errnum);
 void	parse_file(t_data *d, char *filename);
 void	free_matrix(char ***split);
-void	flush_data(t_data *d, int errnum);
+void	flush_data(t_data *d, int errnum, int all);
 void	process_reso(t_data *d);
 void	process_texture(t_data *d, char *text_name);
 void	process_floor_ceil(t_data *d, char *name);
 int		process_map(t_data *d, int fd, int retval);
 int		create_matrix(t_data *d);
+void	draw_2d_map(t_data *d);
+void	fill_map_rect(t_data *d, t_bg *bg, int width, int height);
 
 #endif

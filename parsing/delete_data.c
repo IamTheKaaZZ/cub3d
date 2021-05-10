@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:33:36 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/06 10:33:30 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:26:54 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_matrix(char ***split)
 	*split = NULL;
 }
 
-void	flush_data(t_data *d, int errnum)
+void	flush_data(t_data *d, int errnum, int all)
 {
 	if (d->mp.line)
 		ft_strdel(&d->mp.line);
@@ -39,7 +39,7 @@ void	flush_data(t_data *d, int errnum)
 		ft_strdel(&d->mp.sprite);
 	if (d->lst)
 		ft_lstmemdel_clear(&d->lst, ft_memdel);
-	if (d->mt.matrix)
+	if (d->mt.matrix && all)
 		free_matrix(&d->mt.matrix);
 	if (errnum >= 0)
 		ft_error_handling(errnum);

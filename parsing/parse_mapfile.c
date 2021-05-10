@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:16:42 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/05 15:00:22 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/10 16:31:41 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static int	error_check(t_data *d, int retval)
 {
 	if (retval < 0)
-		flush_data(d, READ_ERR);
-	if (ft_ischrinset(" \t1", *d->mp.line) && d->mp.res.x && d->mp.res.y
+		flush_data(d, READ_ERR, 1);
+	if (ft_ischrinset(" \t1", *d->mp.line) && d->m.win_w && d->m.win_h
 		&& d->mp.n_text && d->mp.s_text && d->mp.w_text && d->mp.e_text
 		&& d->mp.sprite && d->mp.floor_col && d->mp.ceil_col)
 	{
-		printf("Resolution is %d, %d\n", d->mp.res.x, d->mp.res.y);
+		printf("Resolution is %d, %d\n", d->m.win_w, d->m.win_h);
 		printf("North texture = %s\n", d->mp.n_text);
 		printf("South texture = %s\n", d->mp.s_text);
 		printf("West texture = %s\n", d->mp.w_text);
@@ -79,6 +79,6 @@ void	parse_file(t_data *d, char *filename)
 		process_line(d);
 	}
 	if (retval == 0 || !process_map(d, fd, retval))
-		flush_data(d, MAP_ERR);
+		flush_data(d, MAP_ERR, 1);
 	close(fd);
 }
