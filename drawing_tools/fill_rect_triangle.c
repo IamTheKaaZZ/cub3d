@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:00:25 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/20 15:01:33 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/11 09:27:28 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	fill_rect_triangle(t_image *img, int width, int height, int colour)
 		while (px.x <= width)
 		{
 			if (ft_is_in_rect_triangle(px, p1, p2, p3))
-				img->addr[(px.y * img->line_len) + px.x] = colour;
+				img->addr[((int)px.y * img->line_len) + (int)px.x] = colour;
 			px.x++;
 		}
 		px.y++;

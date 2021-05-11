@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/10 17:42:25 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/11 17:22:11 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define A_KEY 0
 # define S_KEY 1
 # define D_KEY 2
+# define PI 3.14159
 enum	e_error_msg
 {
 	NO_CUB_FILE_TYPE,
@@ -111,6 +112,7 @@ typedef struct s_matrix
 	size_t	y;
 	size_t	x_off;
 	size_t	y_off;
+	int		cub_size;
 	size_t	maxlen;
 	size_t	height;
 	char	**matrix;
@@ -118,9 +120,13 @@ typedef struct s_matrix
 
 typedef struct s_player
 {
-	t_point	pos;
+	t_point	scr_pos;
+	t_point	map_pos;
+	t_point	delta;
+	float	angle;
 	char	dir;
 	t_image	img;
+	t_image	ray;
 }			t_player;
 
 typedef struct s_xpm
@@ -189,6 +195,17 @@ void	process_floor_ceil(t_data *d, char *name);
 int		process_map(t_data *d, int fd, int retval);
 int		create_matrix(t_data *d);
 void	draw_2d_map(t_data *d);
-void	fill_map_rect(t_data *d, t_bg *bg, int width, int height);
+void	fill_2dmap(t_data *d, int cub_size, int colour);
+void	base_data_init(t_data *d);
+int		close_window(t_data *d);
+int		key_press(int keycode, t_data *d);
+int		key_release(int keycode, t_data *d);
+int		*image_data(t_image *i);
+void	destroy_image(t_data *d, void *iptr, void *addr);
+void	movement(t_data *d);
+void	init_bg(t_data *d);
+void	init_player(t_data *d);
+void	setup_player_data(t_data *d, int x, int y);
+void	draw_ray(t_data *d, float length, int colour);
 
 #endif

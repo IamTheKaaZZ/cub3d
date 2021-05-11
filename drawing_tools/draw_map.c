@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:01:53 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/10 17:48:11 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/11 12:13:22 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 void	draw_2d_map(t_data *d)
 {
-	int	cub_x;
-	int	cub_y;
+	int	cub_size;
 
-	cub_x = (d->m.win_w / 2) / d->mt.maxlen;
-	cub_y = d->m.win_h / d->mt.height;
-	//printf("cubx = %d, cuby = %d\n", cub_x, cub_y);
-	d->bg.map2d.line_len /= 4;
+	cub_size = d->mt.cub_size;
 	d->mt.y = 0;
 	while (d->mt.y < d->mt.height)
 	{
 		d->mt.x = 0;
 		while (d->mt.x < d->mt.maxlen)
 		{
-			d->mt.x_off = d->mt.x * cub_x;
-			d->mt.y_off = d->mt.y * cub_y;
-			if (d->mt.matrix[d->mt.y][d->mt.x] == 1)
-				fill_map_rect(d, &d->bg, cub_x, cub_y);
+			d->mt.x_off = d->mt.x * cub_size;
+			d->mt.y_off = d->mt.y * cub_size;
+			if (d->mt.matrix[d->mt.y][d->mt.x] == '1')
+				fill_2dmap(d, cub_size, create_trgb(0, 20, 200, 200));
+			if (ft_ischrinset("02NSEW", d->mt.matrix[d->mt.y][d->mt.x]))
+				fill_2dmap(d, cub_size, create_trgb(0, 150, 20, 215));
+			if (d->mt.matrix[d->mt.y][d->mt.x] == ' ')
+				fill_2dmap(d, cub_size, create_trgb(0, 20, 150, 150));
 			d->mt.x++;
 		}
 		d->mt.y++;

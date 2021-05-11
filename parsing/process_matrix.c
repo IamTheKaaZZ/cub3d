@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 10:49:24 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/10 16:32:55 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/11 15:47:46 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int valid_data(t_data *d)
 		&d->txt.e.img_w, &d->txt.e.img_h);
 	d->txt.spr.img = mlx_xpm_file_to_image(d->m.mlx, d->mp.sprite,
 		&d->txt.spr.img_w, &d->txt.spr.img_h);
-	printf("%c\n", d->pl.dir);
+	printf("%c and angle = %f\n", d->pl.dir, d->pl.angle);
 	if (d->pl.dir == 0 || !d->txt.n.img || !d->txt.s.img
 		|| !d->txt.e.img || !d->txt.spr.img)
 		return (0);
@@ -49,9 +49,7 @@ static int	valid_and_player(t_data *d, size_t x, size_t y)
 	{
 		if (d->pl.dir != 0)
 			return (0);
-		d->pl.dir = d->mt.matrix[y][x];
-		d->pl.pos.x = x;
-		d->pl.pos.y = y;
+		setup_player_data(d, x, y);
 	}
 	return (1);
 }

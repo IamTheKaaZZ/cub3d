@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/15 11:35:49 by bcosters          #+#    #+#              #
-#    Updated: 2021/05/04 14:32:29 by bcosters         ###   ########.fr        #
+#    Updated: 2021/05/11 14:35:53 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,10 @@ HEADER	= cub3d.h
 GAMESRC	= my_awesome_game.c
 SRCS	= ${shell find drawing_tools -type f -name "*.c"}
 SRCS	+= ${shell find parsing -type f -name "*.c"}
+SRCS	+= ${shell find game_setup -type f -name "*.c"}
 OBJS	= ${SRCS:drawing_tools/%.c=obj/%.o}
 OBJS	+= ${SRCS:parsing/%.c=obj/%.o}
+OBJS	+= ${SRCS:game_setup/%.c=obj/%.o}
 
 CC		= gcc
 RM		= rm -f
@@ -48,6 +50,10 @@ obj/%.o: drawing_tools/%.c
 
 obj/%.o: parsing/%.c
 			@echo "Compiling parsing source object: $@"
+			@$(CC) $(CFLAGS) -c $< -o $@
+
+obj/%.o: game_setup/%.c
+			@echo "Compiling game_data source object: $@"
 			@$(CC) $(CFLAGS) -c $< -o $@
 
 #	Active rules
