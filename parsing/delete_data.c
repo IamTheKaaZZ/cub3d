@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:33:36 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/10 14:26:54 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/12 11:39:12 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,24 @@ void	free_matrix(char ***split)
 	*split = NULL;
 }
 
-void	flush_data(t_data *d, int errnum, int all)
+void	flush_data(t_data *d, int errnum, t_bool totalclean)
 {
-	if (d->mp.line)
-		ft_strdel(&d->mp.line);
-	if (d->mp.n_text)
-		ft_strdel(&d->mp.n_text);
-	if (d->mp.s_text)
-		ft_strdel(&d->mp.s_text);
-	if (d->mp.w_text)
-		ft_strdel(&d->mp.w_text);
-	if (d->mp.e_text)
-		ft_strdel(&d->mp.e_text);
-	if (d->mp.sprite)
-		ft_strdel(&d->mp.sprite);
+	if (d->mp.gnl)
+		ft_strdel(&d->mp.gnl);
+	if (d->mp.n_text.path)
+		ft_strdel(&d->mp.n_text.path);
+	if (d->mp.s_text.path)
+		ft_strdel(&d->mp.s_text.path);
+	if (d->mp.w_text.path)
+		ft_strdel(&d->mp.w_text.path);
+	if (d->mp.e_text.path)
+		ft_strdel(&d->mp.e_text.path);
+	if (d->mp.sprite.path)
+		ft_strdel(&d->mp.sprite.path);
 	if (d->lst)
 		ft_lstmemdel_clear(&d->lst, ft_memdel);
-	if (d->mt.matrix && all)
-		free_matrix(&d->mt.matrix);
+	if (d->mt.grid && totalclean)
+		free_matrix(&d->mt.grid);
 	if (errnum >= 0)
 		ft_error_handling(errnum);
 }

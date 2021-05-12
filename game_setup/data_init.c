@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:32:58 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/11 16:34:28 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/12 15:56:29 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 
 static void	game_data_init(t_data *d)
 {
-	d->pl.map_pos.x = 0;
-	d->pl.map_pos.y = 0;
+	d->pl.grid_pos.x = 0;
+	d->pl.grid_pos.y = 0;
 	d->pl.dir = 0;
 	d->pl.angle = 0;
-	d->pl.img.ptr = NULL;
-	d->pl.ray.ptr = NULL;
-	d->txt.n.img = NULL;
-	d->txt.n.img_h = 0;
-	d->txt.n.img_w = 0;
-	d->txt.e.img = NULL;
-	d->txt.e.img_h = 0;
-	d->txt.e.img_w = 0;
-	d->txt.s.img = NULL;
-	d->txt.s.img_h = 0;
-	d->txt.s.img_w = 0;
-	d->txt.w.img = NULL;
-	d->txt.w.img_h = 0;
-	d->txt.w.img_w = 0;
-	d->txt.spr.img = NULL;
-	d->txt.spr.img_h = 0;
-	d->txt.spr.img_w = 0;
+	d->mp.n_text.data.img = NULL;
+	d->mp.n_text.data.img_h = 0;
+	d->mp.n_text.data.img_w = 0;
+	d->mp.e_text.data.img = NULL;
+	d->mp.e_text.data.img_h = 0;
+	d->mp.e_text.data.img_w = 0;
+	d->mp.s_text.data.img = NULL;
+	d->mp.s_text.data.img_h = 0;
+	d->mp.s_text.data.img_w = 0;
+	d->mp.w_text.data.img = NULL;
+	d->mp.w_text.data.img_h = 0;
+	d->mp.w_text.data.img_w = 0;
+	d->mp.sprite.data.img = NULL;
+	d->mp.sprite.data.img_h = 0;
+	d->mp.sprite.data.img_w = 0;
 }
 
 void	base_data_init(t_data *d)
@@ -43,18 +41,18 @@ void	base_data_init(t_data *d)
 	d->m.win = NULL;
 	d->m.win_w = 0;
 	d->m.win_h = 0;
-	d->mp.line = NULL;
-	d->mp.n_text = NULL;
-	d->mp.s_text = NULL;
-	d->mp.w_text = NULL;
-	d->mp.e_text = NULL;
-	d->mp.sprite = NULL;
+	d->mp.gnl = NULL;
+	d->mp.n_text.path = NULL;
+	d->mp.s_text.path = NULL;
+	d->mp.w_text.path = NULL;
+	d->mp.e_text.path = NULL;
+	d->mp.sprite.path = NULL;
 	d->mp.floor_col= -1;
 	d->mp.ceil_col= -1;
 	d->lst = ft_lstnew(NULL);
-	d->mt.maxlen = 0;
-	d->mt.height = 0;
-	d->mt.matrix = NULL;
+	d->mt.max_x = 0;
+	d->mt.max_y = 0;
+	d->mt.grid = NULL;
 	d->key.w = 0;
 	d->key.a = 0;
 	d->key.s = 0;

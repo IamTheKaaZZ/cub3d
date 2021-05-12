@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:51:56 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/11 10:37:34 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/12 12:55:53 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,23 @@
 **	Fill a square with a given height, width and colour
 */
 
-void	fill_rect(t_image *img, int width, int height, int colour)
+void	fill_rect(t_rect *rect, int *imgaddr, int screen_width)
 {
-	int	h;
-	int	w;
-	int	line_len;
+	int	i;
+	int	j;
+	int	x;
+	int	y;
 
-	line_len = img->line_len / 4;
-	h = 0;
-	while (h < height)
+	//rect->border_width--;
+	i = -1;
+	while (++i < rect->height)
 	{
-		w = 0;
-		while (w < width)
+		j = -1;
+		while (++j < rect->width)
 		{
-			img->addr[(h * line_len) + w] = colour;
-			w++;
+			x = rect->x + j;
+			y = rect->y + i;
+			imgaddr[(y * screen_width) + x] = rect->fill_col;
 		}
-		h++;
-	}
-}
-
-void	fill_2dmap(t_data *d, int cub_size, int colour)
-{
-	size_t	height;
-	size_t	width;
-	size_t	h;
-	size_t	w;
-	int		line_len;
-
-	line_len = d->bg.map2d.line_len / 4;
-	height = cub_size * (d->mt.y + 1);
-	width = cub_size * (d->mt.x + 1);
-	h = d->mt.y_off + 1;
-	while (h < height)
-	{
-		w = d->mt.x_off + 1;
-		while (w < width)
-		{
-			d->bg.map2d.addr[(h * line_len) + w] = colour;
-			w++;
-		}
-		h++;
 	}
 }

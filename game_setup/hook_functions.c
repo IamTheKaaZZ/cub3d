@@ -6,19 +6,11 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:38:13 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/11 14:40:30 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/12 13:12:23 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-int	close_window(t_data *d)
-{
-	mlx_destroy_window(d->m.mlx, d->m.win);
-	flush_data(d, -1, 1);
-	printf("Destroying the window and exiting game.\n");
-	exit(EXIT_SUCCESS);
-}
 
 int	key_press(int keycode, t_data *d)
 {
@@ -72,12 +64,21 @@ int	*image_data(t_image *i)
 	return ((int *)mlx_get_data_addr(i->ptr, &i->bpp, &i->line_len, &i->end));
 }
 
-void	destroy_image(t_data *d, void *iptr, void *addr)
+void	destroy_image(t_data *d)
 {
-	if (iptr)
+	if (d->m.img.ptr)
 	{
-		mlx_destroy_image(d->m.mlx, iptr);
-		iptr = NULL;
-		addr = NULL;
+		mlx_destroy_image(d->m.mlx, d->m.img.ptr);
+		d->m.img.ptr = NULL;
+		d->m.img.addr = NULL;
 	}
+}
+
+int	close_window(t_data *d)
+{
+	destroy_image(d);
+	mlx_destroy_window(d->m.mlx, d->m.win);
+	flush_data(d, NO_ERROR, TRUE);
+	printf("Destroying the window and exiting game.\n");
+	exit(EXIT_SUCCESS);
 }

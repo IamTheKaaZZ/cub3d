@@ -6,34 +6,31 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:48:47 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/11 17:27:03 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/12 14:38:51 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	draw_ray(t_data *d, float length, int colour)
+void	draw_line(t_line *line, int *imgaddr, int screen_width)
 {
-	int	line_len;
-	t_point	end;
-	int		slope;
-	int		y;
-	int		x;
+	t_point px;
+	int		pixels;
+	t_point	delta;
 
-	line_len = d->pl.ray.line_len / 4;
-	end.x = d->pl.scr_pos.x + cos(d->pl.angle) * length;
-	end.y = d->pl.scr_pos.y + sin(d->pl.angle) * length;
-	slope = (int)((d->pl.scr_pos.y - end.y) / (d->pl.scr_pos.x - end.x));
-	y = 0;
-	while (y < length)
+	px.x = line->start_x;
+	px.y = line->start_y;
+
+	delta.x = line->end_x - line->start_x;
+	delta.y = line->end_y - line->start_y;
+	pixels = sqrt(pow(delta.x, 2) + pow(delta.y, 2));
+	delta.x /= pixels;
+	delta.y /= pixels;
+	while (pixels)
 	{
-		x = 0;
-		while (x < length)
-		{
-			if (slope == y / x)
-				d->pl.ray.addr[(y * line_len) + x] = colour;
-			x++;
-		}
-		y++;
+		imgaddr[((int)px.y * screen_width) + (int)px.x] = line->colour;
+		px.x += delta.x;
+		px.y += delta.y;
+		pixels--;
 	}
 }
