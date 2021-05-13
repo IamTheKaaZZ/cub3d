@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 17:21:48 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/12 17:22:13 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 17:00:37 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,15 @@ double	degree_to_radian(double degrees)
 double	radian_to_degree(double radian)
 {
 	return (radian * 180.0 / M_PI);
+}
+
+double	radian_within_circle(double radian)
+{
+	double	circle;
+
+	circle = 2 * M_PI;
+	radian = fmod(radian, circle);
+	if (radian < 0)
+		radian += 2 * M_PI;
+	return (radian);
 }

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:38:13 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/12 13:12:23 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 17:11:51 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	key_press(int keycode, t_data *d)
 {
-	printf("current coordinates: %f, %f\n", d->pl.scr_pos.x, d->pl.scr_pos.y);
+	printf("current coordinates: %f, %f\n", d->pl.map_pos.x, d->pl.map_pos.y);
 	printf("You pressed this key: %d\n", keycode);
 	if (keycode == ESCAPE_KEY)
 		close_window(d);

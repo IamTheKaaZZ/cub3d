@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:26:44 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/12 17:13:04 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 15:36:27 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ void	refresh_screen(t_data *d)
 	bg.y = 0;
 	bg.height = d->m.win_h;
 	bg.width = d->m.win_w;
-	bg.fill_col = d->mp.ceil_col;
+	bg.fill_col = d->sc.ceil_col;
 	bg.border_width = 0;
 	fill_rect(&bg, d->m.img.addr, d->m.win_w);
-	fill_minimap(d);
-	refresh_player(d);
+	if (d->mp.minimap_size != 0)
+	{
+		fill_minimap(d);
+		refresh_player(d);
+	}
 	mlx_put_image_to_window(d->m.mlx, d->m.win, d->m.img.ptr, 0, 0);
-	mlx_string_put(d->m.mlx, d->m.win, 100, 600, create_trgb(0, 255, 255, 255), "Text here");
-	mlx_put_image_to_window(d->m.mlx, d->m.win, d->mp.sprite.data.img, 600, 500);
+	//mlx_string_put(d->m.mlx, d->m.win, 100, 600, create_trgb(0, 255, 255, 255), "Text here");
+	//mlx_put_image_to_window(d->m.mlx, d->m.win, d->sc.sprite.data.img, 600, 500);
 }
 
 int	render_next_frame(t_data *d)

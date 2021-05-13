@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:32:58 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/12 15:56:29 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 17:32:57 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,22 @@ static void	game_data_init(t_data *d)
 	d->pl.grid_pos.y = 0;
 	d->pl.dir = 0;
 	d->pl.angle = 0;
-	d->mp.n_text.data.img = NULL;
-	d->mp.n_text.data.img_h = 0;
-	d->mp.n_text.data.img_w = 0;
-	d->mp.e_text.data.img = NULL;
-	d->mp.e_text.data.img_h = 0;
-	d->mp.e_text.data.img_w = 0;
-	d->mp.s_text.data.img = NULL;
-	d->mp.s_text.data.img_h = 0;
-	d->mp.s_text.data.img_w = 0;
-	d->mp.w_text.data.img = NULL;
-	d->mp.w_text.data.img_h = 0;
-	d->mp.w_text.data.img_w = 0;
-	d->mp.sprite.data.img = NULL;
-	d->mp.sprite.data.img_h = 0;
-	d->mp.sprite.data.img_w = 0;
+	d->sc.n_text.data.img = NULL;
+	d->sc.n_text.data.img_h = 0;
+	d->sc.n_text.data.img_w = 0;
+	d->sc.e_text.data.img = NULL;
+	d->sc.e_text.data.img_h = 0;
+	d->sc.e_text.data.img_w = 0;
+	d->sc.s_text.data.img = NULL;
+	d->sc.s_text.data.img_h = 0;
+	d->sc.s_text.data.img_w = 0;
+	d->sc.w_text.data.img = NULL;
+	d->sc.w_text.data.img_h = 0;
+	d->sc.w_text.data.img_w = 0;
+	d->sc.sprite.data.img = NULL;
+	d->sc.sprite.data.img_h = 0;
+	d->sc.sprite.data.img_w = 0;
+	d->sc.sprite_count = 0;
 }
 
 void	base_data_init(t_data *d)
@@ -41,18 +42,18 @@ void	base_data_init(t_data *d)
 	d->m.win = NULL;
 	d->m.win_w = 0;
 	d->m.win_h = 0;
-	d->mp.gnl = NULL;
-	d->mp.n_text.path = NULL;
-	d->mp.s_text.path = NULL;
-	d->mp.w_text.path = NULL;
-	d->mp.e_text.path = NULL;
-	d->mp.sprite.path = NULL;
-	d->mp.floor_col= -1;
-	d->mp.ceil_col= -1;
+	d->sc.gnl = NULL;
+	d->sc.n_text.path = NULL;
+	d->sc.s_text.path = NULL;
+	d->sc.w_text.path = NULL;
+	d->sc.e_text.path = NULL;
+	d->sc.sprite.path = NULL;
+	d->sc.floor_col= -1;
+	d->sc.ceil_col= -1;
 	d->lst = ft_lstnew(NULL);
-	d->mt.max_x = 0;
-	d->mt.max_y = 0;
-	d->mt.grid = NULL;
+	d->mp.max_x = 0;
+	d->mp.max_y = 0;
+	d->mp.grid = NULL;
 	d->key.w = 0;
 	d->key.a = 0;
 	d->key.s = 0;

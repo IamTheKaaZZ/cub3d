@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:51:56 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/12 12:55:53 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 15:37:56 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	fill_rect(t_rect *rect, int *imgaddr, int screen_width)
 	int	x;
 	int	y;
 
-	//rect->border_width--;
 	i = -1;
 	while (++i < rect->height)
 	{

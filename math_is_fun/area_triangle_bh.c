@@ -6,18 +6,18 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:57:06 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/19 15:57:36 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 12:52:56 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-float	area_triangle_bh(t_point p1, t_point p2, t_point p3)
+double	area_triangle_bh(t_point p1, t_point p2, t_point p3)
 {
-	float	calc;
-	float	calc1;
-	float	calc2;
-	float	calc3;
+	double	calc;
+	double	calc1;
+	double	calc2;
+	double	calc3;
 
 	calc1 = p1.x * (p2.y - p3.y);
 	calc2 = p2.x * (p3.y - p1.y);

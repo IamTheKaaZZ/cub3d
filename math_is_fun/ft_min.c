@@ -6,11 +6,11 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:55:08 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/19 15:55:21 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 12:57:57 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_min(int a, int b, int c)
+double	ft_min(double a, double b, double c)
 {
 	if (a < b && a < c)
 		return (a);

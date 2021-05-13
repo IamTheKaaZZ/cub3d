@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/12 17:20:05 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 17:43:31 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 # define MAXRES_X 2560
 # define MAXRES_Y 1440
+# define DEFAULT_TILE_SIZE 32
 # define ESCAPE_KEY 53
 # define LEFT_ARR_KEY 123
 # define RIGHT_ARR_KEY 124
@@ -96,6 +97,24 @@ typedef struct s_point
 	double	y;
 }			t_point;
 
+typedef struct s_ray
+{
+	t_point	pos;
+	double	len;
+	double	angle;
+	t_point	step;
+	char	dir;
+	char	side;
+	char	obst;
+}			t_ray;
+
+typedef struct s_rays
+{
+	t_ray	*array;
+	double	view_angle;
+	double	dist_proj_plane;
+}			t_rays;
+
 typedef struct s_xpm
 {
 	void	*img;
@@ -109,7 +128,7 @@ typedef struct s_text
 	t_xpm	data;
 }			t_text;
 
-typedef struct s_map
+typedef struct s_scene
 {
 	char	*gnl;
 	t_text	n_text;
@@ -117,11 +136,21 @@ typedef struct s_map
 	t_text	w_text;
 	t_text	e_text;
 	t_text	sprite;
+	int		sprite_count;
 	int		floor_col;
 	int		ceil_col;
-}			t_map;
+}			t_scene;
 
-typedef struct s_matrix
+typedef struct s_sprite
+{
+	t_point	pos;
+	t_text	text;
+	double	dist;
+	double	rotation;
+	t_bool	is_visible;
+}			t_sprite;
+
+typedef struct s_map
 {
 	int		x;
 	int		y;
@@ -131,11 +160,11 @@ typedef struct s_matrix
 	int		max_x;
 	int		max_y;
 	char	**grid;
-}			t_matrix;
+}			t_map;
 
 typedef struct s_player
 {
-	t_point	scr_pos;
+	t_point	map_pos;
 	t_point	grid_pos;
 	t_point	delta;
 	double	angle;
@@ -202,30 +231,36 @@ typedef struct s_data
 	t_mlx		m;
 	t_keys		key;
 	t_col		col;
-	t_map		mp;
+	t_scene		sc;
 	t_list		*lst;
-	t_matrix	mt;
+	t_map		mp;
 	t_player	pl;
 }				t_data;
 
 /*
-**	PROTOTYPES
+**		PROTOTYPES
 */
 
-float	area_triangle_bh(t_point p1, t_point p2, t_point p3);
+/*
+**	MATH
+*/
+
+double	area_triangle_bh(t_point p1, t_point p2, t_point p3);
 float	area_triangle_pyth(t_point p1, t_point p2, t_point p3);
-void	fill_circle(t_circle *circle, int *imgaddr, int screen_width);
-void	fill_rect(t_rect *rect, int *imgaddr, int screen_width);
-void	fill_rect_triangle(t_image *img, int width, int height, int colour);
-void	fill_triangle(t_triangle *tri, int *imgaddr, int screen_width);
 t_bool	ft_is_in_rect_triangle(t_point px, t_point p1, t_point p2, t_point p3);
 t_bool	ft_is_in_triangle(t_point px, t_point p1, t_point p2, t_point p3);
-int		ft_max(int a, int b, int c);
-int		ft_min(int a, int b, int c);
+double	ft_max(double a, double b, double c);
+double	ft_min(double a, double b, double c);
 double	degree_to_radian(double degrees);
 double	radian_to_degree(double radian);
+double	radian_within_circle(double radian);
 int		create_inverse_trgb(int colour);
 int		create_trgb(int t, int r, int g, int b);
+
+/*
+**	PARSING
+*/
+
 int		get_colour(int	floor_col, char gridchar);
 void	ft_error_handling(int errnum);
 void	parse_file(t_data *d, char *filename);
@@ -236,7 +271,22 @@ void	process_texture(t_data *d, char *text_name);
 void	process_floor_ceil(t_data *d, char *name);
 int		process_map(t_data *d, int fd, int retval);
 int		create_matrix(t_data *d);
+
+/*
+**	DRAWING
+*/
+
+void	fill_circle(t_circle *circle, int *imgaddr, int screen_width);
+void	fill_rect(t_rect *rect, int *imgaddr, int screen_width);
+void	fill_rect_triangle(t_image *img, int width, int height, int colour);
+void	fill_triangle(t_triangle *tri, int *imgaddr, int screen_width);
 void	fill_minimap(t_data *d);
+void	draw_line(t_line *line, int *imgaddr, int screen_width);
+
+/*
+**	GAME
+*/
+
 void	base_data_init(t_data *d);
 int		close_window(t_data *d);
 int		key_press(int keycode, t_data *d);
@@ -247,6 +297,19 @@ void	movement(t_data *d);
 void	refresh_screen(t_data *d);
 void	refresh_player(t_data *d);
 void	setup_player_data(t_data *d, int x, int y);
-void	draw_line(t_line *line, int *imgaddr, int screen_width);
+
+/*
+**	RAYCASTING
+*/
+
+t_bool	is_facing_south(double angle);
+t_bool	is_facing_west(double angle);
+char	get_wall_dir(t_ray *ray, t_map *map, int x, int y);
+t_bool	is_wall(t_ray *ray, t_map *map, double x, double y);
+void	get_horiz_intersect_south(t_ray *ray, t_map *map, t_player *play);
+void	get_horiz_intersect_north(t_ray *ray, t_map *map, t_player *play);
+void	get_vert_intersect_east(t_ray *ray, t_map *map, t_player *play);
+void	get_vert_intersect_west(t_ray *ray, t_map *map, t_player *play);
+void	get_shortest_ray_len(t_ray *ray, t_map *map, t_player *play);
 
 #endif

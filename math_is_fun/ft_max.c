@@ -6,11 +6,11 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:54:35 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/19 15:54:48 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/13 12:56:42 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_max(int a, int b, int c)
+double	ft_max(double a, double b, double c)
 {
 	if (a > b && a > c)
 		return (a);
