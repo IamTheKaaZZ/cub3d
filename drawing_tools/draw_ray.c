@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:48:47 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/12 14:38:51 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:49:20 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,26 @@ void	draw_line(t_line *line, int *imgaddr, int screen_width)
 		px.x += delta.x;
 		px.y += delta.y;
 		pixels--;
+	}
+}
+
+void	draw_rays(t_data *d)
+{
+	int		i;
+	t_line	line;
+
+	i = -1;
+	while (++i < d->m.win_w)
+	{
+		line.start_x = d->pl.map_pos.x + d->mp.tile_size + 2;
+		line.start_y = d->pl.map_pos.y + d->mp.tile_size + 2;
+		line.end_x = d->pl.map_pos.x + d->mp.tile_size + 2
+			+ cos(d->rays.array[i].angle)
+			* d->mp.tile_size * d->rays.array[i].len;
+		line.end_y = d->pl.map_pos.y + d->mp.tile_size + 2
+			+ sin(d->rays.array[i].angle)
+			* d->mp.tile_size * d->rays.array[i].len;
+		line.colour = create_trgb(0, 255, 10, 10);
+		draw_line(&line, d->m.img.addr, d->m.win_w);
 	}
 }

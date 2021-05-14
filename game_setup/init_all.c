@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data_init.c                                        :+:      :+:    :+:   */
+/*   init_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 14:32:58 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 17:32:57 by bcosters         ###   ########.fr       */
+/*   Created: 2021/05/14 13:09:10 by bcosters          #+#    #+#             */
+/*   Updated: 2021/05/14 14:18:50 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static void	game_data_init(t_data *d)
+static void	data_init_two(t_data *d)
 {
 	d->pl.grid_pos.x = 0;
 	d->pl.grid_pos.y = 0;
-	d->pl.dir = 0;
+	d->mp.player_dir = 0;
 	d->pl.angle = 0;
-	d->sc.n_text.data.img = NULL;
-	d->sc.n_text.data.img_h = 0;
-	d->sc.n_text.data.img_w = 0;
-	d->sc.e_text.data.img = NULL;
-	d->sc.e_text.data.img_h = 0;
-	d->sc.e_text.data.img_w = 0;
-	d->sc.s_text.data.img = NULL;
-	d->sc.s_text.data.img_h = 0;
-	d->sc.s_text.data.img_w = 0;
-	d->sc.w_text.data.img = NULL;
-	d->sc.w_text.data.img_h = 0;
-	d->sc.w_text.data.img_w = 0;
-	d->sc.sprite.data.img = NULL;
-	d->sc.sprite.data.img_h = 0;
-	d->sc.sprite.data.img_w = 0;
+	d->sc.n_text.img.ptr = NULL;
+	d->sc.n_text.img_h = 0;
+	d->sc.n_text.img_w = 0;
+	d->sc.e_text.img.ptr = NULL;
+	d->sc.e_text.img_h = 0;
+	d->sc.e_text.img_w = 0;
+	d->sc.s_text.img.ptr = NULL;
+	d->sc.s_text.img_h = 0;
+	d->sc.s_text.img_w = 0;
+	d->sc.w_text.img.ptr = NULL;
+	d->sc.w_text.img_h = 0;
+	d->sc.w_text.img_w = 0;
+	d->sc.sprite.img.ptr = NULL;
+	d->sc.sprite.img_h = 0;
+	d->sc.sprite.img_w = 0;
 	d->sc.sprite_count = 0;
+	d->sc.sprites = NULL;
 }
 
-void	base_data_init(t_data *d)
+static void	data_init_one(t_data *d)
 {
 	d->m.mlx = NULL;
 	d->m.win = NULL;
@@ -50,7 +51,6 @@ void	base_data_init(t_data *d)
 	d->sc.sprite.path = NULL;
 	d->sc.floor_col= -1;
 	d->sc.ceil_col= -1;
-	d->lst = ft_lstnew(NULL);
 	d->mp.max_x = 0;
 	d->mp.max_y = 0;
 	d->mp.grid = NULL;
@@ -62,5 +62,17 @@ void	base_data_init(t_data *d)
 	d->key.r_arr = 0;
 	d->key.u_arr = 0;
 	d->key.d_arr = 0;
-	game_data_init(d);
+}
+
+void	game_data_init(t_data *d, char *cubfilename)
+{
+	data_init_one(d);
+	data_init_two(d);
+	d->m.mlx = mlx_init();
+	parse_file(d, cubfilename);
+	init_texts_rays(d);
+	init_sprites(d);
+	d->m.win = mlx_new_window(d->m.mlx, d->m.win_w, d->m.win_h, "This game is pretty awesome");
+	d->m.img.ptr = mlx_new_image(d->m.mlx, d->m.win_w, d->m.win_h);
+	d->m.img.addr = image_data(&d->m.img);
 }

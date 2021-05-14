@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 17:43:31 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:51:20 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define MAXRES_X 2560
 # define MAXRES_Y 1440
 # define DEFAULT_TILE_SIZE 32
+# define SCALE 64
+# define FOV 60
 # define ESCAPE_KEY 53
 # define LEFT_ARR_KEY 123
 # define RIGHT_ARR_KEY 124
@@ -111,35 +113,17 @@ typedef struct s_ray
 typedef struct s_rays
 {
 	t_ray	*array;
-	double	view_angle;
+	double	fov;
 	double	dist_proj_plane;
 }			t_rays;
-
-typedef struct s_xpm
-{
-	void	*img;
-	int		img_w;
-	int		img_h;
-}			t_xpm;
 
 typedef struct s_text
 {
 	char	*path;
-	t_xpm	data;
+	t_image	img;
+	int		img_w;
+	int		img_h;
 }			t_text;
-
-typedef struct s_scene
-{
-	char	*gnl;
-	t_text	n_text;
-	t_text	s_text;
-	t_text	w_text;
-	t_text	e_text;
-	t_text	sprite;
-	int		sprite_count;
-	int		floor_col;
-	int		ceil_col;
-}			t_scene;
 
 typedef struct s_sprite
 {
@@ -150,15 +134,30 @@ typedef struct s_sprite
 	t_bool	is_visible;
 }			t_sprite;
 
+typedef struct s_scene
+{
+	char		*gnl;
+	t_text		n_text;
+	t_text		s_text;
+	t_text		w_text;
+	t_text		e_text;
+	t_text		sprite;
+	int			sprite_count;
+	int			floor_col;
+	int			ceil_col;
+	t_sprite	*sprites;
+}				t_scene;
+
 typedef struct s_map
 {
 	int		x;
 	int		y;
 	int		x_off;
 	int		y_off;
-	int		minimap_size;
+	int		tile_size;
 	int		max_x;
 	int		max_y;
+	char	player_dir;
 	char	**grid;
 }			t_map;
 
@@ -168,7 +167,6 @@ typedef struct s_player
 	t_point	grid_pos;
 	t_point	delta;
 	double	angle;
-	char	dir;
 }			t_player;
 
 typedef struct s_mlx
@@ -191,7 +189,6 @@ typedef struct s_rect
 	double	width;
 	double	height;
 	int		fill_col;
-	int		border_width;
 	t_text	tex;
 }			t_rect;
 
@@ -209,7 +206,6 @@ typedef struct s_circle
 	int		y;
 	double	radius;
 	int		fill_col;
-	int		border_width;
 }			t_circle;
 
 typedef struct s_line
@@ -230,11 +226,10 @@ typedef struct s_data
 {
 	t_mlx		m;
 	t_keys		key;
-	t_col		col;
 	t_scene		sc;
-	t_list		*lst;
 	t_map		mp;
 	t_player	pl;
+	t_rays		rays;
 }				t_data;
 
 /*
@@ -265,12 +260,11 @@ int		get_colour(int	floor_col, char gridchar);
 void	ft_error_handling(int errnum);
 void	parse_file(t_data *d, char *filename);
 void	free_matrix(char ***split);
-void	flush_data(t_data *d, int errnum, t_bool totalclean);
 void	process_reso(t_data *d);
 void	process_texture(t_data *d, char *text_name);
 void	process_floor_ceil(t_data *d, char *name);
 int		process_map(t_data *d, int fd, int retval);
-int		create_matrix(t_data *d);
+int		create_matrix(t_data *d, t_list *game_map);
 
 /*
 **	DRAWING
@@ -282,21 +276,30 @@ void	fill_rect_triangle(t_image *img, int width, int height, int colour);
 void	fill_triangle(t_triangle *tri, int *imgaddr, int screen_width);
 void	fill_minimap(t_data *d);
 void	draw_line(t_line *line, int *imgaddr, int screen_width);
+void	draw_rays(t_data *d);
+void	draw_ceiling(t_data *d);
+void	draw_floor(t_data *d);
+void	draw_walls(t_data *d);
 
 /*
 **	GAME
 */
 
-void	base_data_init(t_data *d);
+void	game_data_init(t_data *d, char *cubfilename);
+void	setup_player_data(t_data *d, int x, int y);
+void	init_texts_rays(t_data *d);
+void	init_sprites(t_data *d);
+int		*image_data(t_image *i);
+void	flush_data(t_data *d, int errnum, t_bool totalclean);
+void	destroy_image(t_image *i, void *mlx);
 int		close_window(t_data *d);
 int		key_press(int keycode, t_data *d);
 int		key_release(int keycode, t_data *d);
-int		*image_data(t_image *i);
-void	destroy_image(t_data *d);
 void	movement(t_data *d);
 void	refresh_screen(t_data *d);
 void	refresh_player(t_data *d);
-void	setup_player_data(t_data *d, int x, int y);
+void	cast_rays(t_data *d);
+void	refresh_sprites(t_data *d);
 
 /*
 **	RAYCASTING

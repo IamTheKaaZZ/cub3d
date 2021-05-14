@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 15:08:38 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 15:47:19 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/14 10:34:29 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*tab_to_spaces(char *line)
 	return (result);
 }
 
-static int	add_to_list(t_data *d)
+static int	add_to_list(t_data *d, t_list *game_map)
 {
 	t_list *tmpnew;
 
@@ -69,19 +69,22 @@ static int	add_to_list(t_data *d)
 	tmpnew = ft_lstnew(ft_strdup(d->sc.gnl));
 	if (!tmpnew)
 		return (0);
-	ft_lstadd_back(&d->lst, tmpnew);
+	ft_lstadd_back(&game_map, tmpnew);
 	ft_strdel(&d->sc.gnl);
 	return (1);
 }
 
 int	process_map(t_data *d, int fd, int retval)
 {
-	if (!(ft_isspace(*d->sc.gnl) || *d->sc.gnl == '1'))
+	t_list	*game_map;
+
+	game_map = ft_lstnew(NULL);
+	if (!(ft_isspace(*d->sc.gnl) || *d->sc.gnl == '1') || !game_map)
 		return (0);
 	d->sc.gnl = tab_to_spaces(d->sc.gnl);
 	d->mp.max_x = ft_strlen(d->sc.gnl);
-	ft_lstadd_back(&d->lst, ft_lstnew(ft_strdup(d->sc.gnl)));
-	if (!d->lst->next)
+	ft_lstadd_back(&game_map, ft_lstnew(ft_strdup(d->sc.gnl)));
+	if (!game_map->next)
 		return (0);
 	ft_strdel(&d->sc.gnl);
 	while (retval)
@@ -89,15 +92,11 @@ int	process_map(t_data *d, int fd, int retval)
 		retval = get_next_line(fd, &d->sc.gnl);
 		if (!(ft_isspace(*d->sc.gnl) || d->sc.gnl[0] == '1'))
 			return (0);
-		if (!add_to_list(d))
+		if (!add_to_list(d, game_map))
 			return (0);
 	}
-	d->mp.max_y = ft_lstsize(d->lst) - 1;
-	//
-	printf("maxlen = %d\n", d->mp.max_x);
-	printf("list size = %d\n", d->mp.max_y);
-	//
-	if (!create_matrix(d))
+	d->mp.max_y = ft_lstsize(game_map) - 1;
+	if (!create_matrix(d, game_map))
 		return (0);
 	return (1);
 }

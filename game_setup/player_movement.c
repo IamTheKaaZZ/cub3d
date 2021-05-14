@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:47:42 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 17:12:34 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/14 16:36:39 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ static void	player_move_up(t_data *d)
 {
 	int	moved_y;
 
-	// -1 for the offset
-	if (d->mp.minimap_size != 0)
-		moved_y = (int)(d->pl.map_pos.y - 1.5 - 1) / d->mp.minimap_size;
+	if (d->mp.tile_size != 0)
+		moved_y = (int)(d->pl.map_pos.y - 1.5 - 1) / d->mp.tile_size;
 	else
 		moved_y = (int)(d->pl.map_pos.y - 1.5 - 1) / DEFAULT_TILE_SIZE;
 	if (!ft_ischrinset(" 1", d->mp.grid[moved_y][(int)d->pl.grid_pos.x]))
@@ -33,9 +32,8 @@ static void	player_move_down(t_data *d)
 {
 	int moved_y;
 
-	// -7 for the offset
-	if (d->mp.minimap_size != 0)
-		moved_y = (int)(d->pl.map_pos.y + 1.5 + 4) / d->mp.minimap_size;
+	if (d->mp.tile_size != 0)
+		moved_y = (int)(d->pl.map_pos.y + 1.5 + 4) / d->mp.tile_size;
 	else
 		moved_y = (int)(d->pl.map_pos.y + 1.5 + 4) / DEFAULT_TILE_SIZE;
 	if (!ft_ischrinset(" 1", d->mp.grid[moved_y][(int)d->pl.grid_pos.x]))
@@ -50,9 +48,8 @@ static void	player_move_left(t_data *d)
 {
 	int	moved_x;
 
-	// -1 for the offset
-	if (d->mp.minimap_size != 0)
-		moved_x = (int)(d->pl.map_pos.x - 1.5 - 1) / d->mp.minimap_size;
+	if (d->mp.tile_size != 0)
+		moved_x = (int)(d->pl.map_pos.x - 1.5 - 1) / d->mp.tile_size;
 	else
 		moved_x = (int)(d->pl.map_pos.x - 1.5 - 1) / DEFAULT_TILE_SIZE;
 	if (!ft_ischrinset(" 1", d->mp.grid[(int)d->pl.grid_pos.y][moved_x]))
@@ -67,9 +64,8 @@ static void	player_move_right(t_data *d)
 {
 	int	moved_x;
 
-	// -7 for the offset
-	if (d->mp.minimap_size != 0)
-		moved_x = (int)(d->pl.map_pos.x + 1.5 + 4) / d->mp.minimap_size;
+	if (d->mp.tile_size != 0)
+		moved_x = (int)(d->pl.map_pos.x + 1.5 + 4) / d->mp.tile_size;
 	else
 		moved_x = (int)(d->pl.map_pos.x + 1.5 + 4) / DEFAULT_TILE_SIZE;
 	if (!ft_ischrinset(" 1", d->mp.grid[(int)d->pl.grid_pos.y][moved_x]))
@@ -106,5 +102,5 @@ void	movement(t_data *d)
 		d->pl.delta.x = 5 * cos(d->pl.angle);
 		d->pl.delta.y = 5 * sin(d->pl.angle);
 	}
-	refresh_screen(d);
+	//refresh_screen(d);
 }

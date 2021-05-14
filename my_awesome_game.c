@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:26:44 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 15:36:27 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:32:38 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,23 @@
 
 void	refresh_screen(t_data *d)
 {
-	t_rect	bg;
-
-	bg.x = 0;
-	bg.y = 0;
-	bg.height = d->m.win_h;
-	bg.width = d->m.win_w;
-	bg.fill_col = d->sc.ceil_col;
-	bg.border_width = 0;
-	fill_rect(&bg, d->m.img.addr, d->m.win_w);
-	if (d->mp.minimap_size != 0)
+	draw_ceiling(d);
+	draw_floor(d);
+	draw_walls(d);
+	if (d->mp.tile_size != 0)
 	{
 		fill_minimap(d);
 		refresh_player(d);
 	}
 	mlx_put_image_to_window(d->m.mlx, d->m.win, d->m.img.ptr, 0, 0);
-	//mlx_string_put(d->m.mlx, d->m.win, 100, 600, create_trgb(0, 255, 255, 255), "Text here");
-	//mlx_put_image_to_window(d->m.mlx, d->m.win, d->sc.sprite.data.img, 600, 500);
 }
 
 int	render_next_frame(t_data *d)
 {
 	movement(d);
+	cast_rays(d);
+	refresh_sprites(d);
+	refresh_screen(d);
 	return (EXIT_SUCCESS);
 }
 
@@ -43,16 +38,12 @@ void	cub3d(char *cubfilename)
 {
 	t_data	d;
 
-	base_data_init(&d);
-	d.m.mlx = mlx_init();
-	parse_file(&d, cubfilename);
-	d.m.win = mlx_new_window(d.m.mlx, d.m.win_w, d.m.win_h, "This game is pretty awesome");
-	d.m.img.ptr = mlx_new_image(d.m.mlx, d.m.win_w, d.m.win_h);
-	d.m.img.addr = image_data(&d.m.img);
-	refresh_screen(&d);
+	game_data_init(&d, cubfilename);
+	//refresh_screen(&d);
 	mlx_hook(d.m.win, 2, 1L<<0, &key_press, &d);
 	mlx_hook(d.m.win, 3, 1L<<1, &key_release, &d);
 	mlx_hook(d.m.win, 17, 1L<<17, &close_window, &d);
+	//render_next_frame(&d);
 	mlx_loop_hook(d.m.mlx, &render_next_frame, &d);
 	mlx_loop(d.m.mlx);
 }

@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/15 11:35:49 by bcosters          #+#    #+#              #
-#    Updated: 2021/05/13 15:33:22 by bcosters         ###   ########.fr        #
+#    Updated: 2021/05/14 17:31:06 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ obj/%.o: raycasting/%.c
 			@echo "Compiling raycasting source object: $@"
 			@$(CC) $(CFLAGS) -c $< -o $@
 
-#	Active rules
+#	Active rules -g ${wildcard drawing_tools/*.c} ${wildcard game_setup/*.c} ${wildcard raycasting/*.c}
 
 all:		$(NAME)
 

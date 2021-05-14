@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:38:13 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 17:11:51 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:20:19 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,19 @@ int	*image_data(t_image *i)
 	return ((int *)mlx_get_data_addr(i->ptr, &i->bpp, &i->line_len, &i->end));
 }
 
-void	destroy_image(t_data *d)
+void	destroy_image(t_image *i, void *mlx)
 {
-	if (d->m.img.ptr)
+	if (i->ptr)
 	{
-		mlx_destroy_image(d->m.mlx, d->m.img.ptr);
-		d->m.img.ptr = NULL;
-		d->m.img.addr = NULL;
+		mlx_destroy_image(mlx, i->ptr);
+		i->ptr = NULL;
+		i->addr = NULL;
 	}
 }
 
 int	close_window(t_data *d)
 {
-	destroy_image(d);
+	destroy_image(&d->m.img, d->m.mlx);
 	mlx_destroy_window(d->m.mlx, d->m.win);
 	flush_data(d, NO_ERROR, TRUE);
 	printf("Destroying the window and exiting game.\n");
