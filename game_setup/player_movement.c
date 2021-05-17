@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:47:42 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 16:36:39 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:20:46 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,65 +14,65 @@
 
 static void	player_move_up(t_data *d)
 {
-	int	moved_y;
+	double	moved_y;
+	double	moved_x;
+	double	angle;
 
-	if (d->mp.tile_size != 0)
-		moved_y = (int)(d->pl.map_pos.y - 1.5 - 1) / d->mp.tile_size;
-	else
-		moved_y = (int)(d->pl.map_pos.y - 1.5 - 1) / DEFAULT_TILE_SIZE;
-	if (!ft_ischrinset(" 1", d->mp.grid[moved_y][(int)d->pl.grid_pos.x]))
+	angle = d->pl.angle;
+	moved_y = d->pl.grid.y + MOVE_SPEED * sin(angle);
+	moved_x = d->pl.grid.x + MOVE_SPEED * cos(angle);
+	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y - COLL)][(int)(moved_x + COLL)]))
 	{
-		d->pl.map_pos.y -= 1.5;
-		if (moved_y < (int)d->pl.grid_pos.y)
-			d->pl.grid_pos.y--;
+		d->pl.grid.y += MOVE_SPEED * sin(angle);
+		d->pl.grid.x += MOVE_SPEED * cos(angle);
 	}
 }
 
 static void	player_move_down(t_data *d)
 {
-	int moved_y;
+	double	moved_y;
+	double	moved_x;
+	double	angle;
 
-	if (d->mp.tile_size != 0)
-		moved_y = (int)(d->pl.map_pos.y + 1.5 + 4) / d->mp.tile_size;
-	else
-		moved_y = (int)(d->pl.map_pos.y + 1.5 + 4) / DEFAULT_TILE_SIZE;
-	if (!ft_ischrinset(" 1", d->mp.grid[moved_y][(int)d->pl.grid_pos.x]))
+	angle = d->pl.angle;
+	moved_y = d->pl.grid.y - MOVE_SPEED * sin(angle);
+	moved_x = d->pl.grid.x - MOVE_SPEED * cos(angle);
+	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y + COLL)][(int)(moved_x + COLL)]))
 	{
-	d->pl.map_pos.y += 1.5;
-	if (moved_y > (int)d->pl.grid_pos.y)
-		d->pl.grid_pos.y++;
+		d->pl.grid.y -= MOVE_SPEED * sin(angle);
+		d->pl.grid.x -= MOVE_SPEED * cos(angle);
 	}
 }
 
 static void	player_move_left(t_data *d)
 {
-	int	moved_x;
+	double	moved_y;
+	double	moved_x;
+	double	angle;
 
-	if (d->mp.tile_size != 0)
-		moved_x = (int)(d->pl.map_pos.x - 1.5 - 1) / d->mp.tile_size;
-	else
-		moved_x = (int)(d->pl.map_pos.x - 1.5 - 1) / DEFAULT_TILE_SIZE;
-	if (!ft_ischrinset(" 1", d->mp.grid[(int)d->pl.grid_pos.y][moved_x]))
+	angle = d->pl.angle + degree_to_radian(90);
+	moved_y = d->pl.grid.y - MOVE_SPEED * sin(angle);
+	moved_x = d->pl.grid.x - MOVE_SPEED * cos(angle);
+	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y + COLL)][(int)(moved_x - COLL)]))
 	{
-		d->pl.map_pos.x -= 1.5;
-		if (moved_x < (int)d->pl.grid_pos.x)
-			d->pl.grid_pos.x--;
+		d->pl.grid.y -= MOVE_SPEED * sin(angle);
+		d->pl.grid.x -= MOVE_SPEED * cos(angle);
 	}
 }
 
 static void	player_move_right(t_data *d)
 {
-	int	moved_x;
+	double	moved_y;
+	double	moved_x;
+	double	angle;
 
-	if (d->mp.tile_size != 0)
-		moved_x = (int)(d->pl.map_pos.x + 1.5 + 4) / d->mp.tile_size;
-	else
-		moved_x = (int)(d->pl.map_pos.x + 1.5 + 4) / DEFAULT_TILE_SIZE;
-	if (!ft_ischrinset(" 1", d->mp.grid[(int)d->pl.grid_pos.y][moved_x]))
+	angle = d->pl.angle + degree_to_radian(90);
+	moved_y = d->pl.grid.y + MOVE_SPEED * sin(angle);
+	moved_x = d->pl.grid.x + MOVE_SPEED * cos(angle);
+	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y - COLL)][(int)(moved_x + COLL)]))
 	{
-		d->pl.map_pos.x += 1.5;
-		if (moved_x > (int)d->pl.grid_pos.x)
-			d->pl.grid_pos.x++;
+		d->pl.grid.y += MOVE_SPEED * sin(angle);
+		d->pl.grid.x += MOVE_SPEED * cos(angle);
 	}
 }
 
@@ -88,19 +88,14 @@ void	movement(t_data *d)
 		player_move_right(d);
 	if (d->key.l_arr)
 	{
-		d->pl.angle -= 0.1;
+		d->pl.angle -= degree_to_radian(4);
 		if (d->pl.angle < 0)
 			d->pl.angle += 2 * M_PI;
-		d->pl.delta.x = 5 * cos(d->pl.angle);
-		d->pl.delta.y = 5 * sin(d->pl.angle);
 	}
 	if (d->key.r_arr)
 	{
-		d->pl.angle += 0.1;
+		d->pl.angle += degree_to_radian(4);
 		if (d->pl.angle > 2 * M_PI)
 			d->pl.angle -= 2 * M_PI;
-		d->pl.delta.x = 5 * cos(d->pl.angle);
-		d->pl.delta.y = 5 * sin(d->pl.angle);
 	}
-	//refresh_screen(d);
 }

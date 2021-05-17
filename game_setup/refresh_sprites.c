@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 14:31:33 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 14:58:53 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 11:51:53 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	update_angle(t_data *d, t_sprite *sprite)
 	double	dy;
 	double	angle;
 
-	dx = sprite->pos.x - d->pl.map_pos.x;
-	dy = sprite->pos.y - d->pl.map_pos.y;
+	dx = sprite->pos.x - d->pl.grid.x;
+	dy = sprite->pos.y - d->pl.grid.y;
 	angle = atan2(dx, dy) - d->pl.angle;
 	sprite->rotation = radian_within_circle(angle);
 }
@@ -46,8 +46,8 @@ static void	update_distance(t_data *d, t_sprite *sprite)
 	double	dx;
 	double	dy;
 
-	dx = sprite->pos.x - d->pl.map_pos.x;
-	dy = sprite->pos.y - d->pl.map_pos.y;
+	dx = sprite->pos.x - d->pl.grid.x;
+	dy = sprite->pos.y - d->pl.grid.y;
 	sprite->dist = sqrt(pow(dx, 2) + pow(dy, 2));
 }
 

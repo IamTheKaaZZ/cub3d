@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:16:02 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 17:26:18 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 15:12:32 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static double	get_wall_height_and_y(t_data *d, t_ray *ray, int *y)
 
 	fisheye_corr = cos(ray->angle - d->pl.angle);
 	scaled_dist = ray->len * SCALE * fisheye_corr;
-	height = (SCALE / scaled_dist) / d->rays.dist_proj_plane;
+	height = (SCALE / scaled_dist) * d->rays.dist_proj_plane;
 	scr_centre = d->m.win_h / 2;
 	wall_centre = height / 2;
 	*y = scr_centre - wall_centre;

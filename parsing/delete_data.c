@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:33:36 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 13:38:51 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 15:49:45 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ static void	total_flush(t_data *d)
 	{
 		free(d->sc.sprites);
 		d->sc.sprites = NULL;
+	}
+	if (d->rays.array)
+	{
+		free(d->rays.array);
+		d->rays.array = NULL;
 	}
 }
 

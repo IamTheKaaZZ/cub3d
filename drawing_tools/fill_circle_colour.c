@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 15:53:34 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 16:57:03 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 12:13:38 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 void	fill_circle(t_circle *circle, int *imgaddr, int screen_width)
 {
-	int	dsq;
-	int x;
-	int	y;
+	double	angle;
+	double	x;
+	double	y;
+	int		draw_x;
+	int		draw_y;
 
-	x = 0;
-	while (x <= circle->radius * 2)
+	while (circle->radius--)
 	{
-		y = 0;
-		while (y <= circle->radius * 2)
+		angle = 0;
+		while (angle <= 360)
 		{
-			dsq = (int)pow((x - circle->radius), 2) + (int)pow((y - circle->radius), 2);
-			if (!(dsq > (int)pow(circle->radius, 2)))
-				imgaddr[((x + circle->y) * screen_width) + y + circle->x] = circle->fill_col;
-			y++;
+			x = circle->radius * cos(degree_to_radian(angle));
+			y = circle->radius * sin(degree_to_radian(angle));
+			draw_x = circle->x + (int)x;
+			draw_y = circle->y + (int)y;
+			imgaddr[draw_y * screen_width + draw_x] = circle->fill_col;
+			angle += 0.1;
 		}
-		x++;
 	}
 }

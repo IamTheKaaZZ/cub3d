@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:26:44 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 17:32:38 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 17:12:19 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	refresh_screen(t_data *d)
 	draw_ceiling(d);
 	draw_floor(d);
 	draw_walls(d);
+	draw_sprites(d);
 	if (d->mp.tile_size != 0)
 	{
 		fill_minimap(d);

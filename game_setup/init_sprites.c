@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:53:52 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 12:53:55 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 11:53:08 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ static void	get_sprites(t_map *map, t_scene *sc)
 		{
 			if (map->grid[y][x] == '2')
 			{
-				sc->sprites[i].pos.x = x * map->tile_size
-					+ (map->tile_size / 2);
-				sc->sprites[i].pos.y = y * map->tile_size
-					+ (map->tile_size / 2);
+				sc->sprites[i].pos.x = x + 0.5;
+				sc->sprites[i].pos.y = y + 0.5;
 				sc->sprites[i].text = sc->sprite;
 				i++;
 			}

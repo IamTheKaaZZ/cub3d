@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/15 11:35:49 by bcosters          #+#    #+#              #
-#    Updated: 2021/05/14 17:31:06 by bcosters         ###   ########.fr        #
+#    Updated: 2021/05/17 09:32:30 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ libx:
 $(NAME):	libx $(OBJDR) $(OBJS) $(HEADER)
 			@ar rcs $(CUBLIB) $(OBJS)
 			@echo "Compiling $(NAME)"
-			@$(CC) $(CFLAGS) $(GAMESRC) $(CUBLIB) -L$(MINILIBDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
+			@$(CC) $(CFLAGS) $(GAMESRC) -g ${wildcard drawing_tools/*.c} ${wildcard game_setup/*.c} ${wildcard raycasting/*.c} $(CUBLIB) -L$(MINILIBDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
 			#--------------------------------#
 			@echo "Finished compiling $(NAME)"
 

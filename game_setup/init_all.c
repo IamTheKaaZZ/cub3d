@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 13:09:10 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 14:18:50 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 11:21:28 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	data_init_two(t_data *d)
 {
-	d->pl.grid_pos.x = 0;
-	d->pl.grid_pos.y = 0;
+	d->pl.grid.x = 0;
+	d->pl.grid.y = 0;
 	d->mp.player_dir = 0;
 	d->pl.angle = 0;
 	d->sc.n_text.img.ptr = NULL;

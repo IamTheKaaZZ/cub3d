@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 17:51:20 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 17:12:02 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define DEFAULT_TILE_SIZE 32
 # define SCALE 64
 # define FOV 60
+# define COLL 0.2
+# define MOVE_SPEED 0.03
 # define ESCAPE_KEY 53
 # define LEFT_ARR_KEY 123
 # define RIGHT_ARR_KEY 124
@@ -163,8 +165,7 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	t_point	map_pos;
-	t_point	grid_pos;
+	t_point	grid;
 	t_point	delta;
 	double	angle;
 }			t_player;
@@ -276,10 +277,12 @@ void	fill_rect_triangle(t_image *img, int width, int height, int colour);
 void	fill_triangle(t_triangle *tri, int *imgaddr, int screen_width);
 void	fill_minimap(t_data *d);
 void	draw_line(t_line *line, int *imgaddr, int screen_width);
-void	draw_rays(t_data *d);
+void	draw_rays(t_data *d, t_player *play);
 void	draw_ceiling(t_data *d);
 void	draw_floor(t_data *d);
 void	draw_walls(t_data *d);
+void	draw_sprite_strip(t_data *d, t_rect *spr, int x_tex, int x_img);
+void	draw_sprites(t_data *d);
 
 /*
 **	GAME

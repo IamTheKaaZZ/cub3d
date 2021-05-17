@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 16:48:47 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 17:49:20 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/17 15:51:10 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_line(t_line *line, int *imgaddr, int screen_width)
 	}
 }
 
-void	draw_rays(t_data *d)
+void	draw_rays(t_data *d, t_player *play)
 {
 	int		i;
 	t_line	line;
@@ -43,15 +43,11 @@ void	draw_rays(t_data *d)
 	i = -1;
 	while (++i < d->m.win_w)
 	{
-		line.start_x = d->pl.map_pos.x + d->mp.tile_size + 2;
-		line.start_y = d->pl.map_pos.y + d->mp.tile_size + 2;
-		line.end_x = d->pl.map_pos.x + d->mp.tile_size + 2
-			+ cos(d->rays.array[i].angle)
-			* d->mp.tile_size * d->rays.array[i].len;
-		line.end_y = d->pl.map_pos.y + d->mp.tile_size + 2
-			+ sin(d->rays.array[i].angle)
-			* d->mp.tile_size * d->rays.array[i].len;
-		line.colour = create_trgb(0, 255, 10, 10);
+		line.start_x = play->grid.x * d->mp.tile_size + d->mp.tile_size;
+		line.start_y = play->grid.y * d->mp.tile_size + d->mp.tile_size;
+		line.end_x = line.start_x + cos(d->rays.array[i].angle) * d->rays.array[i].len * d->mp.tile_size;
+		line.end_y = line.start_y + sin(d->rays.array[i].angle) * d->rays.array[i].len * d->mp.tile_size;
+		line.colour = create_trgb(0, 255, 50, 50);
 		draw_line(&line, d->m.img.addr, d->m.win_w);
 	}
 }
