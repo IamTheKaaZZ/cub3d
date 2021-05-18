@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_ray.c                                         :+:      :+:    :+:   */
+/*   draw_lines.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 16:48:47 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 15:51:10 by bcosters         ###   ########.fr       */
+/*   Created: 2021/05/18 14:39:10 by bcosters          #+#    #+#             */
+/*   Updated: 2021/05/18 17:47:12 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	draw_rays(t_data *d, t_player *play)
 		line.start_y = play->grid.y * d->mp.tile_size + d->mp.tile_size;
 		line.end_x = line.start_x + cos(d->rays.array[i].angle) * d->rays.array[i].len * d->mp.tile_size;
 		line.end_y = line.start_y + sin(d->rays.array[i].angle) * d->rays.array[i].len * d->mp.tile_size;
-		line.colour = create_trgb(0, 255, 50, 50);
+		line.colour = create_trgb(0, 220, 50, 50);
 		draw_line(&line, d->m.img.addr, d->m.win_w);
 	}
 }

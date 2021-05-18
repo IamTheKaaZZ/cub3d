@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 11:16:42 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 15:46:43 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/18 18:09:07 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ void	parse_file(t_data *d, char *filename)
 	}
 	if (retval == 0 || !process_map(d, fd, retval))
 		flush_data(d, MAP_ERR, TRUE);
+	printf("Max x = %d\n", d->mp.max_x);
+	printf("Max y = %d\n", d->mp.max_y);
 	close(fd);
 }

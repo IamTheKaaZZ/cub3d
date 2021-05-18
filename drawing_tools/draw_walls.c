@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:16:02 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 15:12:32 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/18 15:37:46 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ static void	fill_wall_strip(t_rect *wall, int *imgptr, t_mlx *m, t_ray *ray)
 	int		tex_x;
 	int		tex_y;
 	double	step;
-	double	tex_pox;
+	double	tex_pos;
 
 	step = 1.0 * wall->tex.img_h / wall->height;
-	tex_pox = (wall->y - (m->win_h / 2) + (wall->height / 2)) * step;
+	tex_pos = (wall->y - (m->win_h / 2) + (wall->height / 2)) * step;
 	tex_x = get_bitmap_offset(ray, wall->tex.img_w);
 	y = -1;
 	while (++y < wall->height && y < m->win_h)
 	{
-		tex_y = (int)tex_pox & (wall->tex.img_h - 1);
-		tex_pox += step;
+		tex_y = (int)tex_pos & (wall->tex.img_h - 1);
+		tex_pos += step;
 		imgptr[(wall->y * m->win_w) + (y * m->win_w) + wall->x]
 			= wall->tex.img.addr[tex_y * wall->tex.img_h + tex_x];
 	}

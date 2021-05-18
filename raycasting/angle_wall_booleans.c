@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 17:19:40 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 15:49:53 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/18 18:11:16 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	get_wall_dir(t_ray *ray, t_map *map, int x, int y)
 {
 	if (x == 0)
 		return ('E');
-	if (x == map->max_x)
+	if (x >= map->max_x)
 		return ('W');
 	if (y == 0)
 		return ('S');
-	if (y == map->max_y)
+	if (y >= map->max_y - 1)
 		return ('N');
 	if (ray->side == 'H')
 	{
@@ -46,9 +46,9 @@ char	get_wall_dir(t_ray *ray, t_map *map, int x, int y)
 	if (ray->side == 'V')
 	{
 		if (map->grid[y][x - 1] != '1' && is_facing_west(ray->angle))
-			return ('W');
-		if (map->grid[y][x + 1] != '1' && !is_facing_west(ray->angle))
 			return ('E');
+		if (map->grid[y][x + 1] != '1' && !is_facing_west(ray->angle))
+			return ('W');
 	}
 	return (0);
 }

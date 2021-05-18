@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 16:24:12 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 17:12:40 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/18 16:33:38 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,30 @@ static double	get_height(t_data *d, double dist)
 	double	scaled_dist;
 
 	scaled_dist = dist * SCALE;
-	return (SCALE / scaled_dist * d->rays.dist_proj_plane);
+	return ((SCALE / scaled_dist) * d->rays.dist_proj_plane);
 }
 
-static int	get_x_sprite(t_data *d, t_sprite *sprite, double width)
+static int	get_start_x_sprite(t_data *d, t_sprite *sprite, double width)
 {
+	int		x;
 	int		scr_centre;
 	double	spr_centre;
 
 	scr_centre = d->m.win_w / 2;
 	spr_centre = tan(sprite->rotation) * d->rays.dist_proj_plane;
-	return (scr_centre + spr_centre - width / 2);
+	x = scr_centre + spr_centre - width / 2;
+	return (x);
 }
 
-static int	get_y_sprite(t_data *d, double height)
+static int	get_start_y_sprite(t_data *d, double height)
 {
-	int	y;
+	int		y;
+	int		scr_centre;
+	double	spr_centre;
 
-	y = d->m.win_h / 2 - height / 2;
+	scr_centre = d->m.win_h / 2;
+	spr_centre = height / 2;
+	y = scr_centre - spr_centre;
 	if (y < 0)
 		y = 0;
 	return (y);
@@ -42,27 +48,29 @@ static int	get_y_sprite(t_data *d, double height)
 
 static void	draw_one_sprite(t_data *d, t_sprite *sprite)
 {
-	t_rect	spr;
-	double	col_width;
+	t_rect	rect;
+	double	column_width;
 	int		i;
 	int		j;
-	int		img_x;
+	int		pos_x;
 
-	spr.height = get_height(d, sprite->dist);
-	spr.y = get_y_sprite(d, spr.height);
-	spr.x = get_x_sprite(d, sprite, spr.height);
-	spr.tex = sprite->text;
-	col_width = spr.height / sprite->text.img_h;
+	rect.height = get_height(d, sprite->dist);
+	rect.y = get_start_y_sprite(d, rect.height);
+	rect.x = get_start_x_sprite(d, sprite, rect.height);
+	rect.tex = sprite->text;
+	column_width = rect.height / sprite->text.img_h;
 	i = -1;
 	while (++i < sprite->text.img_w)
 	{
 		j = -1;
-		while (++j < col_width)
+		while (++j < column_width)
 		{
-			img_x = (int)(spr.x + (i - 1) * col_width + j);
-			if (img_x >= 0 && img_x < d->m.win_w
-				&& sprite->dist < d->rays.array[img_x].len)
-				draw_sprite_strip(d, &spr, i, img_x);
+			pos_x = (int)(rect.x + (i - 1) * column_width + j);
+			if (pos_x >= 0 && pos_x <= d->m.win_w - 1
+				&& sprite->dist < d->rays.array[pos_x].len)
+			{
+				draw_sprite_strip(d, &rect, i, pos_x);
+			}
 		}
 	}
 }

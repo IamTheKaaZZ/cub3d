@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 17:25:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 14:43:03 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/18 17:58:02 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,100 +15,108 @@
 
 void	get_horiz_intersect_south(t_ray *ray, t_map *map, t_player *play)
 {
-	double	delta_y;
-	double	delta_x;
+	double	dist_y;
+	double	dist_x;
+	double	step_y;
+	double	step_x;
 	double	section_len;
 
-	delta_y = ceil(play->grid.y);
-	ray->step.y = delta_y - play->grid.y;
-	ray->step.x = ray->step.y / tan(ray->angle);
-	delta_x = play->grid.x + ray->step.x;
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
+	dist_y = ceil(play->grid.y);
+	step_y = dist_y - play->grid.y;
+	step_x = step_y / tan(ray->angle);
+	dist_x = play->grid.x + step_x;
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
 	ray->len += section_len;
-	if (is_wall(ray, map, delta_x, delta_y))
+	if (is_wall(ray, map, dist_x, dist_y))
 		return ;
-	ray->step.y = 1;
-	ray->step.x = 1 / tan(ray->angle);
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
-	while (!is_wall(ray, map, delta_x, delta_y))
+	step_y = 1;
+	step_x = 1 / tan(ray->angle);
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
+	while (!is_wall(ray, map, dist_x, dist_y))
 	{
-		delta_y += ray->step.y;
-		delta_x += ray->step.x;
+		dist_y += step_y;
+		dist_x += step_x;
 		ray->len += section_len;
 	}
 }
 
 void	get_horiz_intersect_north(t_ray *ray, t_map *map, t_player *play)
 {
-	double	delta_y;
-	double	delta_x;
+	double	dist_y;
+	double	dist_x;
+	double	step_y;
+	double	step_x;
 	double	section_len;
 
-	delta_y = floor(play->grid.y);
-	ray->step.y = play->grid.y - delta_y;
-	ray->step.x = ray->step.y / tan(ray->angle);
-	delta_x = play->grid.x - ray->step.x;
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
+	dist_y = floor(play->grid.y);
+	step_y = play->grid.y - dist_y;
+	step_x = step_y / tan(ray->angle);
+	dist_x = play->grid.x - step_x;
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
 	ray->len += section_len;
-	if (is_wall(ray, map, delta_x, delta_y - 1))
+	if (is_wall(ray, map, dist_x, dist_y - 1))
 		return ;
-	ray->step.y = -1;
-	ray->step.x = 1 / tan(ray->angle);
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
-	while (!is_wall(ray, map, delta_x, delta_y - 1))
+	step_y = -1;
+	step_x = -1 / tan(ray->angle);
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
+	while (!is_wall(ray, map, dist_x, dist_y - 1))
 	{
-		delta_y += ray->step.y;
-		delta_x += ray->step.x;
+		dist_y += step_y;
+		dist_x += step_x;
 		ray->len += section_len;
 	}
 }
 
 void	get_vert_intersect_east(t_ray *ray, t_map *map, t_player *play)
 {
-	double	delta_y;
-	double	delta_x;
+	double	dist_y;
+	double	dist_x;
+	double	step_y;
+	double	step_x;
 	double	section_len;
 
-	delta_x = ceil(play->grid.x);
-	ray->step.x = delta_x - play->grid.x;
-	ray->step.y = ray->step.x * tan(ray->angle);
-	delta_y = play->grid.y + ray->step.y;
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
+	dist_x = ceil(play->grid.x);
+	step_x = dist_x - play->grid.x;
+	step_y = step_x * tan(ray->angle);
+	dist_y = play->grid.y + step_y;
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
 	ray->len += section_len;
-	if (is_wall(ray, map, delta_x, delta_y))
+	if (is_wall(ray, map, dist_x, dist_y))
 		return ;
-	ray->step.x = 1;
-	ray->step.y = 1 * tan(ray->angle);
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
-	while (!is_wall(ray, map, delta_x, delta_y))
+	step_x = 1;
+	step_y = 1 * tan(ray->angle);
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
+	while (!is_wall(ray, map, dist_x, dist_y))
 	{
-		delta_x += ray->step.x;
-		delta_y += ray->step.y;
+		dist_x += step_x;
+		dist_y += step_y;
 		ray->len += section_len;
 	}
 }
 
 void	get_vert_intersect_west(t_ray *ray, t_map *map, t_player *play)
 {
-	double	delta_y;
-	double	delta_x;
+	double	dist_y;
+	double	dist_x;
+	double	step_y;
+	double	step_x;
 	double	section_len;
 
-	delta_x = floor(play->grid.x);
-	ray->step.x = play->grid.x - delta_x;
-	ray->step.y = ray->step.x * tan(ray->angle);
-	delta_y = play->grid.y - ray->step.y;
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
+	dist_x = floor(play->grid.x);
+	step_x = play->grid.x - dist_x;
+	step_y = step_x * tan(ray->angle);
+	dist_y = play->grid.y - step_y;
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
 	ray->len += section_len;
-	if (is_wall(ray, map, delta_x - 1, delta_y))
+	if (is_wall(ray, map, dist_x - 1, dist_y))
 		return ;
-	ray->step.x = -1;
-	ray->step.y = -1 * tan(ray->angle);
-	section_len = sqrt(pow(ray->step.x, 2) + pow(ray->step.y, 2));
-	while (!is_wall(ray, map, delta_x - 1, delta_y))
+	step_x = -1;
+	step_y = -1 * tan(ray->angle);
+	section_len = sqrt(pow(step_x, 2) + pow(step_y, 2));
+	while (!is_wall(ray, map, dist_x - 1, dist_y))
 	{
-		delta_x += ray->step.x;
-		delta_y += ray->step.y;
+		dist_x += step_x;
+		dist_y += step_y;
 		ray->len += section_len;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 17:12:02 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/18 16:31:28 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ typedef struct s_ray
 	t_point	pos;
 	double	len;
 	double	angle;
-	t_point	step;
 	char	dir;
 	char	side;
 	char	obst;
@@ -130,7 +129,11 @@ typedef struct s_text
 typedef struct s_sprite
 {
 	t_point	pos;
+	t_point	start;
+	t_point	end;
 	t_text	text;
+	double	height;
+	double	width;
 	double	dist;
 	double	rotation;
 	t_bool	is_visible;
@@ -215,6 +218,9 @@ typedef struct s_line
 	double	start_y;
 	double	end_x;
 	double	end_y;
+	double	delta_x;
+	double	delta_y;
+	double	pixels;
 	int		colour;
 	int		width;
 }			t_line;
