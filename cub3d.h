@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/18 16:31:28 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/19 17:25:07 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define MAXRES_Y 1440
 # define DEFAULT_TILE_SIZE 32
 # define SCALE 64
+# define CROUCH 96
+# define JUMP 32
 # define FOV 60
 # define COLL 0.2
 # define MOVE_SPEED 0.03
@@ -42,6 +44,8 @@
 # define A_KEY 0
 # define S_KEY 1
 # define D_KEY 2
+# define Q_KEY 12
+# define SPACE_KEY 49
 enum	e_error_msg
 {
 	NO_CUB_FILE_TYPE,
@@ -56,7 +60,8 @@ enum	e_error_msg
 	RGB_ERR,
 	OVERWRITE_ERR,
 	DATA_ERR,
-	MAP_ERR
+	MAP_ERR,
+	BMP_ERR
 };
 # define NO_ERROR -1
 # define TRUE 1
@@ -76,6 +81,8 @@ typedef struct s_keys
 	t_bool	r_arr;
 	t_bool	u_arr;
 	t_bool	d_arr;
+	t_bool	q;
+	t_bool	space;
 }			t_keys;
 
 typedef struct s_image
@@ -194,6 +201,7 @@ typedef struct s_rect
 	double	height;
 	int		fill_col;
 	t_text	tex;
+	int		offset;
 }			t_rect;
 
 typedef struct s_triangle
@@ -218,11 +226,7 @@ typedef struct s_line
 	double	start_y;
 	double	end_x;
 	double	end_y;
-	double	delta_x;
-	double	delta_y;
-	double	pixels;
 	int		colour;
-	int		width;
 }			t_line;
 
 /*
@@ -237,6 +241,7 @@ typedef struct s_data
 	t_map		mp;
 	t_player	pl;
 	t_rays		rays;
+	t_rect		*wall;
 }				t_data;
 
 /*
@@ -263,7 +268,7 @@ int		create_trgb(int t, int r, int g, int b);
 **	PARSING
 */
 
-int		get_colour(int	floor_col, char gridchar);
+int		get_colour(int	floor_col, int ceil_col, char gridchar);
 void	ft_error_handling(int errnum);
 void	parse_file(t_data *d, char *filename);
 void	free_matrix(char ***split);
@@ -295,6 +300,8 @@ void	draw_sprites(t_data *d);
 */
 
 void	game_data_init(t_data *d, char *cubfilename);
+int		render_next_frame(t_data *d);
+void	take_screenshot(t_data *d);
 void	setup_player_data(t_data *d, int x, int y);
 void	init_texts_rays(t_data *d);
 void	init_sprites(t_data *d);

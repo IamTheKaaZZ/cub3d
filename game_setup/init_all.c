@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 13:09:10 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 11:21:28 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/19 17:29:51 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	data_init_two(t_data *d)
 	d->sc.sprite.img_w = 0;
 	d->sc.sprite_count = 0;
 	d->sc.sprites = NULL;
+	d->wall = NULL;
 }
 
 static void	data_init_one(t_data *d)
@@ -62,6 +63,8 @@ static void	data_init_one(t_data *d)
 	d->key.r_arr = 0;
 	d->key.u_arr = 0;
 	d->key.d_arr = 0;
+	d->key.space = 0;
+	d->key.q = 0;
 }
 
 void	game_data_init(t_data *d, char *cubfilename)

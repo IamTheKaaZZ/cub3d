@@ -6,7 +6,7 @@
 #    By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/15 11:35:49 by bcosters          #+#    #+#              #
-#    Updated: 2021/05/17 09:32:30 by bcosters         ###   ########.fr        #
+#    Updated: 2021/05/19 13:44:45 by bcosters         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ DRAWDIR	= drawing_tools/
 
 MINILIB = libmlx.dylib
 CUBLIB	= libcub3d.a
+SAVE	= screenshot.bmp
 HEADER	= cub3d.h
 
 GAMESRC	= my_awesome_game.c
@@ -31,11 +32,13 @@ SRCS	+= ${shell find parsing -type f -name "*.c"}
 SRCS	+= ${shell find game_setup -type f -name "*.c"}
 SRCS	+= ${shell find math_is_fun -type f -name "*.c"}
 SRCS	+= ${shell find raycasting -type f -name "*.c"}
+SRCS	+= ${shell find screenshot -type f -name "*.c"}
 OBJS	= ${SRCS:drawing_tools/%.c=obj/%.o}
 OBJS	+= ${SRCS:parsing/%.c=obj/%.o}
 OBJS	+= ${SRCS:game_setup/%.c=obj/%.o}
 OBJS	+= ${SRCS:math_is_fun/%.c=obj/%.o}
 OBJS	+= ${SRCS:raycasting/%.c=obj/%.o}
+OBJS	+= ${SRCS:screenshot/%.c=obj/%.o}
 
 CC		= gcc
 RM		= rm -f
@@ -68,6 +71,10 @@ obj/%.o: raycasting/%.c
 			@echo "Compiling raycasting source object: $@"
 			@$(CC) $(CFLAGS) -c $< -o $@
 
+obj/%.o: screenshot/%.c
+			@echo "Compiling screenshot source object: $@"
+			@$(CC) $(CFLAGS) -c $< -o $@
+
 #	Active rules -g ${wildcard drawing_tools/*.c} ${wildcard game_setup/*.c} ${wildcard raycasting/*.c}
 
 all:		$(NAME)
@@ -79,7 +86,7 @@ libx:
 $(NAME):	libx $(OBJDR) $(OBJS) $(HEADER)
 			@ar rcs $(CUBLIB) $(OBJS)
 			@echo "Compiling $(NAME)"
-			@$(CC) $(CFLAGS) $(GAMESRC) -g ${wildcard drawing_tools/*.c} ${wildcard game_setup/*.c} ${wildcard raycasting/*.c} $(CUBLIB) -L$(MINILIBDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
+			@$(CC) $(CFLAGS) $(GAMESRC) $(CUBLIB) -L$(MINILIBDR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFTDR) -lft -o $(NAME)
 			#--------------------------------#
 			@echo "Finished compiling $(NAME)"
 
@@ -99,8 +106,8 @@ clean:
 			@rm -rf ${LIBOBJDR}
 
 fclean:		clean
-			@echo "Removing $(NAME) and $(CUBLIB)"
-			@${RM} ${NAME} ${MINILIB} ${CUBLIB}
+			@echo "Removing $(NAME), $(CUBLIB) and $(SAVE)"
+			@${RM} ${NAME} ${MINILIB} ${CUBLIB} ${SAVE}
 			@echo "Removing opengl library"
 			@$(MAKE) -C ${MINILIBDR} clean
 			@echo "Removing libft library"

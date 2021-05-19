@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:47:42 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 16:20:46 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:00:30 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ static void	player_move_up(t_data *d)
 	double	moved_y;
 	double	moved_x;
 	double	angle;
+	double	coll_y;
+	double	coll_x;
 
 	angle = d->pl.angle;
 	moved_y = d->pl.grid.y + MOVE_SPEED * sin(angle);
 	moved_x = d->pl.grid.x + MOVE_SPEED * cos(angle);
-	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y - COLL)][(int)(moved_x + COLL)]))
+	coll_y = moved_y + COLL * sin(angle);
+	coll_x = moved_x + COLL * cos(angle);
+	if (!ft_ischrinset(" 12", d->mp.grid[(int)(coll_y)][(int)(coll_x)]))
 	{
 		d->pl.grid.y += MOVE_SPEED * sin(angle);
 		d->pl.grid.x += MOVE_SPEED * cos(angle);
@@ -33,11 +37,15 @@ static void	player_move_down(t_data *d)
 	double	moved_y;
 	double	moved_x;
 	double	angle;
+	double	coll_y;
+	double	coll_x;
 
 	angle = d->pl.angle;
 	moved_y = d->pl.grid.y - MOVE_SPEED * sin(angle);
 	moved_x = d->pl.grid.x - MOVE_SPEED * cos(angle);
-	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y + COLL)][(int)(moved_x + COLL)]))
+	coll_y = moved_y - COLL * sin(angle);
+	coll_x = moved_x + COLL * cos(angle);
+	if (!ft_ischrinset(" 12", d->mp.grid[(int)(coll_y)][(int)(coll_x)]))
 	{
 		d->pl.grid.y -= MOVE_SPEED * sin(angle);
 		d->pl.grid.x -= MOVE_SPEED * cos(angle);
@@ -49,11 +57,15 @@ static void	player_move_left(t_data *d)
 	double	moved_y;
 	double	moved_x;
 	double	angle;
+	double	coll_y;
+	double	coll_x;
 
 	angle = d->pl.angle + degree_to_radian(90);
 	moved_y = d->pl.grid.y - MOVE_SPEED * sin(angle);
 	moved_x = d->pl.grid.x - MOVE_SPEED * cos(angle);
-	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y + COLL)][(int)(moved_x - COLL)]))
+	coll_y = moved_y - COLL * sin(angle);
+	coll_x = moved_x + COLL * cos(angle);
+	if (!ft_ischrinset(" 12", d->mp.grid[(int)(coll_y)][(int)(coll_x)]))
 	{
 		d->pl.grid.y -= MOVE_SPEED * sin(angle);
 		d->pl.grid.x -= MOVE_SPEED * cos(angle);
@@ -65,11 +77,15 @@ static void	player_move_right(t_data *d)
 	double	moved_y;
 	double	moved_x;
 	double	angle;
+	double	coll_y;
+	double	coll_x;
 
 	angle = d->pl.angle + degree_to_radian(90);
 	moved_y = d->pl.grid.y + MOVE_SPEED * sin(angle);
 	moved_x = d->pl.grid.x + MOVE_SPEED * cos(angle);
-	if (!ft_ischrinset(" 1", d->mp.grid[(int)(moved_y - COLL)][(int)(moved_x + COLL)]))
+	coll_y = moved_y + COLL * sin(angle);
+	coll_x = moved_x - COLL * cos(angle);
+	if (!ft_ischrinset(" 12", d->mp.grid[(int)(coll_y)][(int)(coll_x)]))
 	{
 		d->pl.grid.y += MOVE_SPEED * sin(angle);
 		d->pl.grid.x += MOVE_SPEED * cos(angle);

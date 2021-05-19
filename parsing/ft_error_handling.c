@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:35:55 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 12:36:11 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/19 13:17:24 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ void	ft_error_handling(int errnum)
 		ft_putendl_fd("Something went wrong during data parsing.\n", 2);
 	else if (errnum == MAP_ERR)
 		ft_putendl_fd("The provided map is invalid.\n", 2);
+	else if (errnum == BMP_ERR)
+		ft_putendl_fd("Could not create the screenshot.\n", 2);
 	exit(EXIT_FAILURE);
 }

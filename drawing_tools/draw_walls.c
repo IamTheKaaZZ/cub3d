@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:16:02 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/18 15:37:46 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/19 18:17:40 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,17 @@ static void	fill_wall_strip(t_rect *wall, int *imgptr, t_mlx *m, t_ray *ray)
 	double	tex_pos;
 
 	step = 1.0 * wall->tex.img_h / wall->height;
-	tex_pos = (wall->y - (m->win_h / 2) + (wall->height / 2)) * step;
+	tex_pos = (wall->y - wall->offset - (m->win_h / 2) + (wall->height / 2)) * step;
 	tex_x = get_bitmap_offset(ray, wall->tex.img_w);
-	y = -1;
-	while (++y < wall->height && y < m->win_h)
+	y = -1 + wall->offset;
+	if (y < -1)
+		y = -1;
+	while (++y < wall->height + wall->offset && y < m->win_h)
 	{
 		tex_y = (int)tex_pos & (wall->tex.img_h - 1);
 		tex_pos += step;
 		imgptr[(wall->y * m->win_w) + (y * m->win_w) + wall->x]
-			= wall->tex.img.addr[tex_y * wall->tex.img_h + tex_x];
+			= wall->tex.img.addr[tex_y * wall->tex.img_h + tex_x]/* | 200 << 24*/;
 	}
 }
 
@@ -88,14 +90,37 @@ void	draw_walls(t_data *d)
 	t_ray	*ray;
 	int		i;
 
-	wall.y = 0;
+	d->wall = malloc(d->m.win_w * sizeof(t_rect));
+	if (!d->wall)
+		return ;
 	i = -1;
 	while (++i < d->m.win_w)
 	{
+		wall.offset = 0;
+		wall.y = 0;
 		ray = &d->rays.array[i];
 		wall.height = get_wall_height_and_y(d, ray, &wall.y);
+		if (d->key.space)
+			wall.offset = wall.height / 8;
+		else if (d->key.q)
+			wall.offset = -wall.height / 8;
+		wall.y += wall.offset;
+		/*if (wall.y > d->m.win_h)
+		{
+			wall.y = d->m.win_h;
+		}
+		if (wall.y < 0)
+		{
+			wall.y = 0;
+		}*/
 		wall.x = i;
 		wall.tex = get_wall_text(&d->sc, ray->dir);
-		fill_wall_strip(&wall, d->m.img.addr, &d->m, ray);
+		d->wall[i] = wall;
+		//fill_wall_strip(&wall, d->m.img.addr, &d->m, ray);
 	}
+	i = -1;
+	while (++i < d->m.win_w)
+		fill_wall_strip(&d->wall[i], d->m.img.addr, &d->m, &d->rays.array[i]);
+	free(d->wall);
+	d->wall = NULL;
 }

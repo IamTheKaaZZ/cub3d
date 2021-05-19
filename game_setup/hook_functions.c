@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:38:13 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/17 11:21:02 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:43:28 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ int	key_press(int keycode, t_data *d)
 		d->key.u_arr = 1;
 	if (keycode == DOWN_ARR_KEY)
 		d->key.d_arr = 1;
+	if (keycode == Q_KEY)
+		d->key.q = 1;
+	if (keycode == SPACE_KEY)
+		d->key.space = 1;
 	return (keycode);
 }
 
@@ -56,6 +60,10 @@ int	key_release(int keycode, t_data *d)
 		d->key.u_arr = 0;
 	if (keycode == DOWN_ARR_KEY)
 		d->key.d_arr = 0;
+	if (keycode == Q_KEY)
+		d->key.q = 0;
+	if (keycode == SPACE_KEY)
+		d->key.space = 0;
 	return (keycode);
 }
 

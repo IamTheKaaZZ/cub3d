@@ -6,20 +6,20 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 12:54:56 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 17:30:12 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/19 10:30:51 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	get_colour(int	floor_col, char gridchar)
+int	get_colour(int	floor_col, int ceil_col, char gridchar)
 {
 	if (ft_ischrinset("1 ", gridchar))
-		return (create_trgb(0, 20, 200, 200));
+		return (create_inverse_trgb(ceil_col));
 	else if (gridchar == '0')
 		return (floor_col);
 	else if (gridchar == '2')
-		return (create_trgb(0, 140, 20, 200));
+		return (create_inverse_trgb(floor_col));
 	else
 		return (floor_col);
 }
@@ -33,7 +33,7 @@ static void	minimap(t_data *d, t_rect *rect, int i, int j)
 	rect->y = i * d->mp.tile_size + d->mp.tile_size;
 	rect->width = d->mp.tile_size;
 	rect->height = d->mp.tile_size;
-	rect->fill_col = get_colour(d->sc.floor_col, gridchar);
+	rect->fill_col = get_colour(d->sc.floor_col, d->sc.ceil_col, gridchar);
 	fill_rect(rect, d->m.img.addr, d->m.win_w);
 }
 
@@ -54,7 +54,7 @@ void	fill_minimap(t_data *d)
 			minimap(d, &rect, i, j);
 		}
 	}
-	rect.x = d->mp.tile_size;
+	/*rect.x = d->mp.tile_size;
 	rect.y = d->mp.tile_size;
 	rect.width = 0.5 * d->mp.tile_size;
 	rect.height = d->mp.max_y * d->mp.tile_size;
@@ -70,5 +70,5 @@ void	fill_minimap(t_data *d)
 	fill_rect(&rect, d->m.img.addr, d->m.win_w);
 	rect.x = d->mp.tile_size;
 	rect.y = d->mp.tile_size * d->mp.max_y + d->mp.tile_size / 2;
-	fill_rect(&rect, d->m.img.addr, d->m.win_w);
+	fill_rect(&rect, d->m.img.addr, d->m.win_w);*/
 }
