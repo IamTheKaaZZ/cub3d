@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:16:02 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/19 18:17:40 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:44:44 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static void	fill_wall_strip(t_rect *wall, int *imgptr, t_mlx *m, t_ray *ray)
 	y = -1 + wall->offset;
 	if (y < -1)
 		y = -1;
-	while (++y < wall->height + wall->offset && y < m->win_h)
+	while (++y < wall->height && y < m->win_h)
 	{
 		tex_y = (int)tex_pos & (wall->tex.img_h - 1);
 		tex_pos += step;
-		imgptr[(wall->y * m->win_w) + (y * m->win_w) + wall->x]
+		imgptr[(wall->y + y) * m->win_w + wall->x]
 			= wall->tex.img.addr[tex_y * wall->tex.img_h + tex_x]/* | 200 << 24*/;
 	}
 }
@@ -105,14 +105,6 @@ void	draw_walls(t_data *d)
 		else if (d->key.q)
 			wall.offset = -wall.height / 8;
 		wall.y += wall.offset;
-		/*if (wall.y > d->m.win_h)
-		{
-			wall.y = d->m.win_h;
-		}
-		if (wall.y < 0)
-		{
-			wall.y = 0;
-		}*/
 		wall.x = i;
 		wall.tex = get_wall_text(&d->sc, ray->dir);
 		d->wall[i] = wall;

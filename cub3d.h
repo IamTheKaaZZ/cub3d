@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/19 17:25:07 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:51:28 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define CROUCH 96
 # define JUMP 32
 # define FOV 60
-# define COLL 0.2
+# define COLL 0.5
 # define MOVE_SPEED 0.03
 # define ESCAPE_KEY 53
 # define LEFT_ARR_KEY 123
