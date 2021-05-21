@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 12:57:34 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/19 13:40:09 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:47:55 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static int	write_bmp_header(t_data *d, int fd)
 	t_uc	header[54];
 
 	ft_bzero(header, 54);
-	header[0] = (t_uc)'B';
-	header[1] = (t_uc)'M';
+	header[0] = (t_uc) 'B';
+	header[1] = (t_uc) 'M';
 	itobin(header + 2, 54 + d->m.win_h * d->m.win_w * 3);
 	header[10] = (t_uc)54;
 	header[14] = (t_uc)40;

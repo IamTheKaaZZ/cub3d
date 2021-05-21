@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:59:47 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 15:48:08 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:57:12 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ void	process_reso(t_data *d)
 	char	**resolution;
 	int		i;
 
-	i = 1;
-	while (d->sc.gnl[i])
+	i = 0;
+	while (d->sc.gnl[++i])
 	{
 		if (!(ft_isspace(d->sc.gnl[i]) || ft_isdigit(d->sc.gnl[i])))
 			flush_data(d, RES_ERR, TRUE);
-		i++;
 	}
 	if (d->m.win_w && d->m.win_h)
 		flush_data(d, OVERWRITE_ERR, TRUE);
@@ -82,6 +81,15 @@ static int	process_colours(t_col *col, char **rgb)
 	return (1);
 }
 
+static void	check_rgb_error(t_data *d, int *i)
+{
+	if (!(d->sc.gnl[*i] == ',' || ft_isdigit(d->sc.gnl[*i]))
+		|| (d->sc.gnl[*i] == ',' && (!ft_isdigit(d->sc.gnl[*i - 1])
+				|| !ft_isdigit(d->sc.gnl[*i + 1]))))
+		flush_data(d, RGB_ERR, FALSE);
+	(*i)++;
+}
+
 void	process_floor_ceil(t_data *d, char *name)
 {
 	char	**rgb;
@@ -95,13 +103,7 @@ void	process_floor_ceil(t_data *d, char *name)
 	while (ft_isspace(d->sc.gnl[i]))
 		i++;
 	while (d->sc.gnl[i])
-	{
-		if (!(d->sc.gnl[i] == ',' || ft_isdigit(d->sc.gnl[i]))
-			|| (d->sc.gnl[i] == ',' && (!ft_isdigit(d->sc.gnl[i - 1])
-					|| !ft_isdigit(d->sc.gnl[i + 1]))))
-			flush_data(d, RGB_ERR, TRUE);
-		i++;
-	}
+		check_rgb_error(d, &i);
 	rgb = ft_split(d->sc.gnl + 2, ',');
 	if (!process_colours(&col, rgb))
 	{
@@ -112,6 +114,5 @@ void	process_floor_ceil(t_data *d, char *name)
 		d->sc.floor_col = col.argb;
 	else if (ft_strequal(name, "CEIL"))
 		d->sc.ceil_col = col.argb;
-	printf("RGB = %d, %d, %d\n", col.r, col.g, col.b);
 	free_matrix(&rgb);
 }

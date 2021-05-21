@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:01:30 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/13 13:00:07 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:20:24 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	fill_triangle(t_triangle *tri, int *imgaddr, int screen_width)
 	px.y = ft_min(tri->p1.y, tri->p2.y, tri->p3.y);
 	while (px.y <= maxy)
 	{
-		px.x = ft_min(tri->p1.x, tri->p2.x, tri->p3.x);;
+		px.x = ft_min(tri->p1.x, tri->p2.x, tri->p3.x);
 		while (px.x <= maxx)
 		{
 			if (ft_is_in_triangle(px, tri->p1, tri->p2, tri->p3))

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 10:49:24 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 14:16:14 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 12:57:41 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@
 **	Final check + loading of the textures into images
 */
 
-static int valid_data(t_data *d)
+static int	valid_data(t_data *d)
 {
 	d->sc.n_text.img.ptr = mlx_xpm_file_to_image(d->m.mlx, d->sc.n_text.path,
-		&d->sc.n_text.img_w, &d->sc.n_text.img_h);
+			&d->sc.n_text.img_w, &d->sc.n_text.img_h);
 	d->sc.s_text.img.ptr = mlx_xpm_file_to_image(d->m.mlx, d->sc.s_text.path,
-		&d->sc.s_text.img_w, &d->sc.s_text.img_h);
+			&d->sc.s_text.img_w, &d->sc.s_text.img_h);
 	d->sc.w_text.img.ptr = mlx_xpm_file_to_image(d->m.mlx, d->sc.w_text.path,
-		&d->sc.w_text.img_w, &d->sc.w_text.img_h);
+			&d->sc.w_text.img_w, &d->sc.w_text.img_h);
 	d->sc.e_text.img.ptr = mlx_xpm_file_to_image(d->m.mlx, d->sc.e_text.path,
-		&d->sc.e_text.img_w, &d->sc.e_text.img_h);
+			&d->sc.e_text.img_w, &d->sc.e_text.img_h);
 	d->sc.sprite.img.ptr = mlx_xpm_file_to_image(d->m.mlx, d->sc.sprite.path,
-		&d->sc.sprite.img_w, &d->sc.sprite.img_h);
+			&d->sc.sprite.img_w, &d->sc.sprite.img_h);
 	printf("%c and angle = %f\n", d->mp.player_dir, d->pl.angle);
 	if (d->mp.player_dir == 0 || !d->sc.n_text.img.ptr
 		|| !d->sc.s_text.img.ptr || !d->sc.e_text.img.ptr
-			|| !d->sc.sprite.img.ptr || !d->sc.sprite_count)
+		|| !d->sc.sprite.img.ptr || !d->sc.sprite_count)
 		return (0);
 	flush_data(d, NO_ERROR, FALSE);
 	return (1);
@@ -39,17 +39,12 @@ static int valid_data(t_data *d)
 
 static int	valid_and_player(t_map *map, t_data *d, int x, int y)
 {
-	if (map->grid[y][x] == ' ')
+	if (!ft_ischrinset(" 1", map->grid[y][x]))
 	{
-		//printf("Got into space check, x = %zu, y = %zu\n", x, y);
-		if (!ft_ischrinset(" 1", map->grid[y][x - 1])
-			|| !ft_ischrinset(" 1", map->grid[y][x + 1])
-			|| !ft_ischrinset(" 1", map->grid[y - 1][x])
-			|| !ft_ischrinset(" 1", map->grid[y + 1][x]))
+		if (map->grid[y][x - 1] == ' ' || map->grid[y][x + 1] == ' '
+			|| map->grid[y - 1][x] == ' ' || map->grid[y + 1][x] == ' ')
 			return (0);
 	}
-	else if (!ft_ischrinset("012NESW", map->grid[y][x]))
-		return (0);
 	if (map->grid[y][x] == '2')
 		d->sc.sprite_count++;
 	if (ft_ischrinset("NSEW", map->grid[y][x]))
@@ -72,10 +67,11 @@ static int	check_map(t_data *d, t_map *map)
 		x = 0;
 		while (x < map->max_x)
 		{
+			if (!ft_ischrinset(" 012NESW", map->grid[y][x]))
+				return (0);
 			if (y == 0 || y == map->max_y - 1
 				|| x == 0 || x == map->max_x - 1)
 			{
-				//printf("Got into edge check, x = %d y = %d\n",x , y);
 				if (!ft_ischrinset(" 1", map->grid[y][x]))
 					return (0);
 			}

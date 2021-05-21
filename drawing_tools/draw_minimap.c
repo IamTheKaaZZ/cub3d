@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 12:54:56 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/19 10:30:51 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:06:31 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,4 @@ void	fill_minimap(t_data *d)
 			minimap(d, &rect, i, j);
 		}
 	}
-	/*rect.x = d->mp.tile_size;
-	rect.y = d->mp.tile_size;
-	rect.width = 0.5 * d->mp.tile_size;
-	rect.height = d->mp.max_y * d->mp.tile_size;
-	rect.fill_col = create_trgb(0, 200, 20, 75);
-	fill_rect(&rect, d->m.img.addr, d->m.win_w);
-	rect.x = d->mp.tile_size * d->mp.max_x + d->mp.tile_size / 2;
-	rect.y = d->mp.tile_size;
-	fill_rect(&rect, d->m.img.addr, d->m.win_w);
-	rect.x = d->mp.tile_size;
-	rect.y = d->mp.tile_size;
-	rect.width = d->mp.max_x * d->mp.tile_size;
-	rect.height = 0.5 * d->mp.tile_size;
-	fill_rect(&rect, d->m.img.addr, d->m.win_w);
-	rect.x = d->mp.tile_size;
-	rect.y = d->mp.tile_size * d->mp.max_y + d->mp.tile_size / 2;
-	fill_rect(&rect, d->m.img.addr, d->m.win_w);*/
 }

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:25:32 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/16 14:26:38 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:29:47 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 # define MAX_FD 1025
 # define BUFFER_SIZE 32
-
 
 int		get_next_line(int fd, char **line);
 size_t	ft_strlen(const char *str);

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 17:28:26 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/18 17:56:50 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:47:01 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	get_horiz_intersect(t_ray *ray, t_map *map, t_player *play)
 	else
 		get_horiz_intersect_north(ray, map, play);
 }
-
 
 static void	get_vert_intersect(t_ray *ray, t_map *map, t_player *play)
 {

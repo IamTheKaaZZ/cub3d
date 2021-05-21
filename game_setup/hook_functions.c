@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 14:38:13 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/19 16:43:28 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:21:56 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	key_release(int keycode, t_data *d)
 	if (keycode == RIGHT_ARR_KEY)
 		d->key.r_arr = 0;
 	if (keycode == UP_ARR_KEY)
-		d->key.u_arr = 0;
-	if (keycode == DOWN_ARR_KEY)
 		d->key.d_arr = 0;
+	if (keycode == DOWN_ARR_KEY)
+		d->key.u_arr = 0;
 	if (keycode == Q_KEY)
 		d->key.q = 0;
 	if (keycode == SPACE_KEY)

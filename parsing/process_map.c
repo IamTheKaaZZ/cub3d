@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 15:08:38 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/14 10:34:29 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:32:29 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*tab_to_spaces(char *line)
 
 static int	add_to_list(t_data *d, t_list *game_map)
 {
-	t_list *tmpnew;
+	t_list	*tmpnew;
 
 	d->sc.gnl = tab_to_spaces(d->sc.gnl);
 	if ((int)ft_strlen(d->sc.gnl) > d->mp.max_x)

@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:43:04 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/20 10:51:28 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 09:53:13 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ typedef struct s_point
 	double	x;
 	double	y;
 }			t_point;
+
+typedef struct s_ipoint
+{
+	int		x;
+	int		y;
+}			t_ipoint;
 
 typedef struct s_ray
 {

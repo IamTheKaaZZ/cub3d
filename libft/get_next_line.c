@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:22:15 by bcosters          #+#    #+#             */
-/*   Updated: 2021/04/16 14:11:05 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:29:37 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ int	get_next_line(int fd, char **line)
 	static char	*saved[MAX_FD];
 	char		*buff;
 
-	if (error_cases(fd, line, saved)
-		|| !(buff = (char*)malloc((BUFFER_SIZE + 1) * sizeof(char))))
+	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (error_cases(fd, line, saved) || !(buff))
 		return (-1);
 	if (saved[fd] && addline(&saved[fd], line))
 	{

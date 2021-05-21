@@ -6,7 +6,7 @@
 /*   By: bcosters <bcosters@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:26:44 by bcosters          #+#    #+#             */
-/*   Updated: 2021/05/19 17:05:14 by bcosters         ###   ########.fr       */
+/*   Updated: 2021/05/21 09:51:38 by bcosters         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	refresh_screen(t_data *d)
 {
 	draw_ceiling(d);
 	draw_floor(d);
-//	jump_crouch_check();
 	draw_walls(d);
 	draw_sprites(d);
 	if (d->mp.tile_size != 0)
@@ -43,9 +42,9 @@ void	cub3d(char *cubfilename, t_bool save)
 	game_data_init(&d, cubfilename);
 	if (save == FALSE)
 	{
-		mlx_hook(d.m.win, 2, 1L<<0, &key_press, &d);
-		mlx_hook(d.m.win, 3, 1L<<1, &key_release, &d);
-		mlx_hook(d.m.win, 17, 1L<<17, &close_window, &d);
+		mlx_hook(d.m.win, 2, 1L << 0, &key_press, &d);
+		mlx_hook(d.m.win, 3, 1L << 1, &key_release, &d);
+		mlx_hook(d.m.win, 17, 1L << 17, &close_window, &d);
 		mlx_loop_hook(d.m.mlx, &render_next_frame, &d);
 		mlx_loop(d.m.mlx);
 	}
