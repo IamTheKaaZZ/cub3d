@@ -5,5 +5,10 @@ The main goal of this this project is to create a raycaster using techniques lik
 
 ## Showcase
 
-Personal Bonus: trippy mode with ARGB manipulation<br>
+Bonuses:<br>
+> `Minimap with player FOV`<br>
+> `Wall and sprite collision`<br>
+> `Custom textures and sprites`
+
+Personal Bonus: trippy mode with ARGB manipulation<br>(Up and Down Arrow Key to toggle)<br><br>
 ![trip_mode_gif](cub3D.gif)
